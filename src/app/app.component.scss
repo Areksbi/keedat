@@ -1,3 +1,15 @@
 .content {
+  display: flex;
   flex: 1;
+}
+
+main {
+  flex-basis: 100%/3*2;
+}
+
+aside {
+  flex-basis: 100%/3*1;
+  height: 100%;
+  position: sticky;
+  top: 0;
 }
