@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './_helpers/angular-material.module';
 import { AppComponent } from './app.component';
@@ -24,7 +23,6 @@ import { FooterComponent, HeaderComponent } from './_components';
     AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
-    ReactiveFormsModule,
   ],
   providers: [
 
