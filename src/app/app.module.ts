@@ -1,11 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './_helpers/angular-material.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth/auth.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from './auth/auth.module';
 import { FooterComponent, HeaderComponent } from './_components';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { FooterComponent, HeaderComponent } from './_components';
     AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
+    ReactiveFormsModule,
   ],
   providers: [
 
