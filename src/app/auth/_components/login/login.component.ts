@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,6 +15,7 @@ export class LoginComponent implements OnInit {
   public submitted = false;
 
   constructor(
+    private recaptchaV3Service: ReCaptchaV3Service,
   ) {
   }
 
@@ -38,6 +41,8 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) { return; }
 
     this.isLoading = true;
+    this.recaptchaV3Service.execute('login')
+      .subscribe((token: string) => console.log(token));
   }
 }
 

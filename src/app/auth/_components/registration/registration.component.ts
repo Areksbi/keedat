@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -13,6 +15,7 @@ export class RegistrationComponent implements OnInit {
   public submitted = false;
 
   constructor(
+    private recaptchaV3Service: ReCaptchaV3Service,
   ) {
   }
 
@@ -41,6 +44,8 @@ export class RegistrationComponent implements OnInit {
     }
 
     this.isLoading = true;
+    this.recaptchaV3Service.execute('registration')
+      .subscribe((token: string) => console.log(token));
   }
 
 }
