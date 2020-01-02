@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  public hiddenPassword = true;
   public isLoading = false;
   public loginForm: FormGroup;
   public submitted = false;
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       email: new FormControl(null, {
         validators: [
+          Validators.email,
           Validators.required
         ]
       }),

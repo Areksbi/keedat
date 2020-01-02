@@ -4,7 +4,8 @@
     <mat-error *ngIf="registerForm.get('email').invalid">Enter a valid email</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" formControlName="password" placeholder="Password" />
+    <input matInput [type]="hiddenPassword ? 'password' : 'text'" formControlName="password" placeholder="Password" />
+    <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword">{{hiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
     <mat-error *ngIf="registerForm.get('password').hasError('required')">Enter a valid password</mat-error>
     <mat-error *ngIf="registerForm.get('password').hasError('minlength')">Enter at least 8 characters</mat-error>
   </mat-form-field>

@@ -4,7 +4,8 @@
     <mat-error *ngIf="loginForm.get('email').invalid">Enter a valid email</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" formControlName="password" placeholder="Password" />
+    <input matInput [type]="hiddenPassword ? 'password' : 'text'" formControlName="password" placeholder="Password" />
+    <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword">{{hiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
     <mat-error *ngIf="loginForm.get('password').invalid">Enter a valid password</mat-error>
   </mat-form-field>
   <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">Login</button>
