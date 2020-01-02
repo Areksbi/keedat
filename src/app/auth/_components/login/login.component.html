@@ -8,5 +8,4 @@
     <mat-error *ngIf="loginForm.get('password').invalid">Enter a valid password</mat-error>
   </mat-form-field>
   <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">Login</button>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
 </form>
