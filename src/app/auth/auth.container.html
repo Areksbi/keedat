@@ -1,9 +1,9 @@
 <mat-card>
   <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Registration">
+    <mat-tab [label]="'auth.registration.title' | translate">
       <app-registration></app-registration>
     </mat-tab>
-    <mat-tab label="Login">
+    <mat-tab [label]="'auth.login.title' | translate">
       <app-login></app-login>
     </mat-tab>
   </mat-tab-group>
