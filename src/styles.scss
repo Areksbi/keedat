@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import "variables";
 
 html,
 body {
@@ -16,3 +16,25 @@ app-root {
   flex-direction: column;
   min-height: 100vh;
 }
+
+button {
+  margin: {
+    bottom: $margin-vertical-button;
+    top: $margin-vertical-button;
+  }
+  text-transform: uppercase;
+  width: 100%;
+}
+
+form {
+  padding: $padding-general;
+}
+
+mat-form-field {
+  margin: {
+    bottom: $margin-vertical-input;
+    top: $margin-vertical-input;
+  }
+  width: 100%;
+}
+
