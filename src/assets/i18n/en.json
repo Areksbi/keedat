@@ -1,5 +1,18 @@
 {
-  "home": {
-    "title": "Pilot data selling"
-  }
+  "auth.login.button": "Login",
+  "auth.login.email.error": "Enter a valid email",
+  "auth.login.email.placeholder": "Email",
+  "auth.login.password.error": "Enter a valid password",
+  "auth.login.password.placeholder": "Password",
+  "auth.login.title": "Login",
+
+  "auth.registration.button": "Register",
+  "auth.registration.email.error": "Enter a valid email",
+  "auth.registration.email.placeholder": "Email",
+  "auth.registration.password.error.max-length": "Enter at least 8 characters",
+  "auth.registration.password.error.required": "Enter a valid password",
+  "auth.registration.password.placeholder": "Password",
+  "auth.registration.title": "Registration",
+
+  "home.title": "Pilot data selling"
 }

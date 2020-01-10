@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { AngularMaterialModule } from '../_helpers/angular-material.module';
 import { AuthContainer } from './auth.container';
@@ -25,6 +26,7 @@ import { LoginComponent, RegistrationComponent } from './_components';
     HttpClientModule,
     ReactiveFormsModule,
     RecaptchaV3Module,
+    TranslateModule,
   ],
   providers: [
     {
