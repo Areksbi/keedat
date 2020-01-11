@@ -10,6 +10,10 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  recaptcha: {
+    type: String,
+    required: true
   }
 });
 

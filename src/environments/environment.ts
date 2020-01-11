@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  api: 'http://localhost:3000/api',
   production: false,
   recaptcha: '6LcW0ssUAAAAAE9glDkg8l2MLhQgReaOwmA9G6vr',
 };

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { concatMap, first } from 'rxjs/operators';
+
+import { AuthService } from '../../_services/auth.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
@@ -15,11 +18,14 @@ export class RegistrationComponent implements OnInit {
   public submitted = false;
 
   constructor(
+    private authService: AuthService,
     private recaptchaV3Service: ReCaptchaV3Service,
   ) {
   }
 
-  ngOnInit() {
+  get f(): { [key: string] : AbstractControl } { return this.registerForm.controls; }
+
+  public ngOnInit(): void {
     this.registerForm = new FormGroup({
       email: new FormControl(null, {
         validators: [
@@ -36,7 +42,7 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
@@ -45,7 +51,19 @@ export class RegistrationComponent implements OnInit {
 
     this.isLoading = true;
     this.recaptchaV3Service.execute('registration')
-      .subscribe((token: string) => console.log(token));
+      .pipe(
+        concatMap((token: string) =>
+          this.authService.registration(this.f.email.value, this.f.password.value, token)),
+        first()
+      )
+      .subscribe(
+        (data) => {
+          console.log(data)
+        },
+        error => {
+          console.log('fail')
+        }
+      );
   }
 
 }
