@@ -1,5 +1,7 @@
 export interface AuthInterface {
   email: string;
   password: string;
-  recaptcha: string
+  privacyPolicyConsent: boolean;
+  recaptchaToken: string;
+  userAgreementConsent: boolean;
 }

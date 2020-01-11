@@ -13,6 +13,13 @@
     <mat-error *ngIf="registerForm.get('password').hasError('minlength')">
       {{ 'auth.registration.password.error.max-length' | translate }}</mat-error>
   </mat-form-field>
+  <div class="registration__consents">
+    <mat-checkbox formControlName="consents">
+      <span [innerHTML]="'auth.registration.consents.label' | translate"></span>
+    </mat-checkbox>
+    <mat-error *ngIf="(registerForm.get('consents').touched || submitted) && registerForm.get('consents').invalid">
+      {{ 'auth.registration.consents.error' | translate }}</mat-error>
+  </div>
   <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">
     {{ 'auth.registration.button' | translate }}</button>
 </form>

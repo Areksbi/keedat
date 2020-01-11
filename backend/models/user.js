@@ -11,8 +11,16 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  recaptcha: {
+  privacyPolicyConsent: {
+    type: Boolean,
+    required: true
+  },
+  recaptchaToken: {
     type: String,
+    required: true
+  },
+  userAgreementConsent: {
+    type: Boolean,
     required: true
   }
 });
