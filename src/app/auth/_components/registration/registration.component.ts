@@ -38,6 +38,11 @@ export class RegistrationComponent implements OnInit {
           Validators.minLength(8),
           Validators.required
         ]
+      }),
+      consents: new FormControl(false, {
+        validators: [
+          Validators.requiredTrue
+        ]
       })
     });
   }
@@ -53,15 +58,17 @@ export class RegistrationComponent implements OnInit {
     this.recaptchaV3Service.execute('registration')
       .pipe(
         concatMap((token: string) =>
-          this.authService.registration(this.f.email.value, this.f.password.value, token)),
+          this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value, token)),
         first()
       )
       .subscribe(
         (data) => {
-          console.log(data)
+          console.log(data);
+          this.isLoading = false;
         },
         error => {
-          console.log('fail')
+          console.log('fail');
+          this.isLoading = false;
         }
       );
   }

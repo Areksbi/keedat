@@ -1,14 +1,16 @@
 @import "variables";
 
+button,
+mat-form-field {
+  margin: {
+    bottom: $margin-general / 2;
+    top: $margin-general / 2;
+  }
+}
+
 html,
 body {
   height: 100%;
-}
-
-body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  margin: 0;
-  min-height: 100vh;
 }
 
 app-root {
@@ -17,24 +19,38 @@ app-root {
   min-height: 100vh;
 }
 
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
 button {
-  margin: {
-    bottom: $margin-vertical-button;
-    top: $margin-vertical-button;
-  }
   text-transform: uppercase;
   width: 100%;
+
+  &.mat-raised-button {
+    margin: $margin-general 0;
+  }
 }
 
 form {
   padding: $padding-general;
 }
 
+mat-checkbox label {
+  font-size: .9rem;
+  white-space: normal !important;
+}
+
+mat-error {
+  font-size: .75rem;
+}
+
 mat-form-field {
-  margin: {
-    bottom: $margin-vertical-input;
-    top: $margin-vertical-input;
-  }
   width: 100%;
 }
 
+.mat-checkbox-layout .mat-checkbox-label {
+  line-height: 1.5;
+}

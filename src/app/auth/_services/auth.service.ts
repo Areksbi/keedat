@@ -16,8 +16,10 @@ export class AuthService {
     private http: HttpClient,
   ) { }
 
-  public registration(email: string, password: string, recaptcha: string): Observable<Object> {
-    const authData: AuthInterface = { email, password, recaptcha };
+  public registration(email: string, password: string, consents: boolean, recaptchaToken: string): Observable<Object> {
+    const privacyPolicyConsent = consents;
+    const userAgreementConsent = consents;
+    const authData: AuthInterface = { email, password, privacyPolicyConsent, userAgreementConsent, recaptchaToken };
     return this.http.post(BACKEND_URL + 'registration', authData);
   }
 }
