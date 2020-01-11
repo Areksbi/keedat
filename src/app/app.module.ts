@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { FooterComponent, HeaderComponent } from './_components';
+import { PrivacyPolicyComponent } from './_components/privacy-policy/privacy-policy.component';
+import { UserAgreementComponent } from './_components/user-agreement/user-agreement.component';
 
 @NgModule({
   bootstrap: [
@@ -20,6 +22,8 @@ import { FooterComponent, HeaderComponent } from './_components';
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    PrivacyPolicyComponent,
+    UserAgreementComponent,
   ],
   imports: [
     AngularMaterialModule,

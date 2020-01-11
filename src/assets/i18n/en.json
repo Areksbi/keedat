@@ -7,7 +7,7 @@
   "auth.login.title": "Login",
 
   "auth.registration.button": "Register",
-  "auth.registration.consents.label": "I confirm that I have read, consent and agree to TODO's <a href=\"/user-agreement\" target=\"_blank\">User Agreement</a> and <a href=\"/privacy-policy\" target=\"_blank\">Privacy Policy</a>, and I am of legal age. I understand that I can change my communication preferences any time in my TODO Account.",
+  "auth.registration.consents.label": "I confirm that I have read, consent and agree to TODO's <a href=\"{{ user-agreement-link }}\" target=\"_blank\">User Agreement</a> and <a href=\"{{ privacy-policy-link }}\" target=\"_blank\">Privacy Policy</a>, and I am of legal age. I understand that I can change my communication preferences any time in my TODO Account.",
   "auth.registration.consents.error": "Consents are required for the registration",
   "auth.registration.email.error": "Enter a valid email",
   "auth.registration.email.placeholder": "Email",
