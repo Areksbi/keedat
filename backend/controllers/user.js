@@ -8,7 +8,8 @@ exports.createUser = (req, res, next) => {
     .then(hash => {
       const user = new User({
         email: req.body.email,
-        password: hash
+        password: hash,
+        recaptcha: req.body.recaptcha
       });
       user.save()
         .then(result => {
