@@ -5,6 +5,7 @@ import { concatMap, first } from 'rxjs/operators';
 
 import { AuthService } from '../../_services/auth.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { ResponseRegistrationInterface } from '../../_interfaces/auth.interface';
 
 @Component({
   selector: 'app-registration',
@@ -62,8 +63,8 @@ export class RegistrationComponent implements OnInit {
         first()
       )
       .subscribe(
-        (data) => {
-          console.log(data);
+        (response: ResponseRegistrationInterface) => {
+          console.log(response);
           this.isLoading = false;
         },
         error => {
