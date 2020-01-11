@@ -4,6 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { concatMap, first } from 'rxjs/operators';
 
 import { AuthService } from '../../_services/auth.service';
+import { links } from '../../../_constants/links.constant';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { ResponseRegistrationInterface } from '../../_interfaces/auth.interface';
 
@@ -15,6 +16,7 @@ import { ResponseRegistrationInterface } from '../../_interfaces/auth.interface'
 export class RegistrationComponent implements OnInit {
   public hiddenPassword = true;
   public isLoading = false;
+  public links = links;
   public registerForm: FormGroup;
   public submitted = false;
 
