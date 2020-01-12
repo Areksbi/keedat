@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { concatMap, first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { AuthService } from '../../_services/auth.service';
 import { links } from '../../../_constants/links.constant';
@@ -46,7 +47,7 @@ export class RegistrationComponent implements OnInit {
         validators: [
           Validators.requiredTrue
         ]
-      })
+      }),
     });
   }
 
@@ -60,16 +61,16 @@ export class RegistrationComponent implements OnInit {
     this.isLoading = true;
     this.recaptchaV3Service.execute('registration')
       .pipe(
-        concatMap((token: string) =>
+        concatMap((token: string): Observable<ResponseRegistrationInterface> =>
           this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value, token)),
         first()
       )
       .subscribe(
-        (response: ResponseRegistrationInterface) => {
+        (response: ResponseRegistrationInterface): void => {
           console.log(response);
           this.isLoading = false;
         },
-        error => {
+        (): void => {
           console.log('fail');
           this.isLoading = false;
         }
