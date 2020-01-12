@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = mongoose.Schema({
+  'date-creation': {
+    type: Date,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -11,11 +15,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  privacyPolicyConsent: {
+  'privacy-policy-consent': {
     type: Boolean,
     required: true
   },
-  userAgreementConsent: {
+  'user-agreement-consent': {
     type: Boolean,
     required: true
   },

@@ -7,10 +7,11 @@ exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
+        'date-creation': new Date().toISOString(),
         email: req.body.email,
         password: hash,
-        privacyPolicyConsent: req.body.privacyPolicyConsent,
-        userAgreementConsent: req.body.userAgreementConsent
+        'privacy-policy-consent': req.body.privacyPolicyConsent,
+        'user-agreement-consent': req.body.userAgreementConsent
       });
       user.save()
         .then(result => {
