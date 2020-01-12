@@ -10,7 +10,6 @@ exports.createUser = (req, res, next) => {
         email: req.body.email,
         password: hash,
         privacyPolicyConsent: req.body.privacyPolicyConsent,
-        recaptchaToken: req.body.recaptchaToken,
         userAgreementConsent: req.body.userAgreementConsent
       });
       user.save()

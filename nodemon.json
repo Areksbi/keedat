@@ -1,5 +1,6 @@
 {
   "env": {
+    "GOOGLE_RECAPTCHA_V3": "6LcW0ssUAAAAADiw3NLtXuX26p9ORMCr_8TqUBuc",
     "MONGO_ATLAS_PW": "KyVyMFHbGdhAUWPi",
     "JWT_KEY": "secret_this_should_be_longer"
   }
