@@ -15,14 +15,10 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     required: true
   },
-  recaptchaToken: {
-    type: String,
-    required: true
-  },
   userAgreementConsent: {
     type: Boolean,
     required: true
-  }
+  },
 });
 
 userSchema.plugin(uniqueValidator);
