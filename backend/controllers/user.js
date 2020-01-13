@@ -7,11 +7,10 @@ exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
+        'consent-privacy-policy': req.body.privacyPolicyConsent,
         'date-creation': new Date().toISOString(),
         email: req.body.email,
         password: hash,
-        'privacy-policy-consent': req.body.privacyPolicyConsent,
-        'user-agreement-consent': req.body.userAgreementConsent
       });
       user.save()
         .then(result => {
@@ -22,7 +21,7 @@ exports.createUser = (req, res, next) => {
         })
         .catch(err => {
           res.status(500).json({
-            message: 'Invalid authentication credentials!'
+            message: 'Invalid registration credentials!'
           });
         });
     });

@@ -86,12 +86,10 @@ export class AuthService {
     email: string, password: string, consents: boolean, recaptchaToken: string
   ): Observable<ResponseRegistrationInterface> {
     const privacyPolicyConsent = consents;
-    const userAgreementConsent = consents;
     const authData: RequestRegistrationInterface = {
       email,
       password,
       privacyPolicyConsent,
-      userAgreementConsent,
       recaptchaToken
     };
     return this.http.post<ResponseRegistrationInterface>(`${BACKEND_URL}registration`, authData);

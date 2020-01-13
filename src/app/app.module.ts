@@ -10,9 +10,7 @@ import { AngularMaterialModule } from './_helpers/angular-material.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
-import { FooterComponent, HeaderComponent } from './_components';
-import { PrivacyPolicyComponent } from './_components/privacy-policy/privacy-policy.component';
-import { UserAgreementComponent } from './_components/user-agreement/user-agreement.component';
+import { FooterComponent, HeaderComponent, PrivacyPolicyComponent } from './_components';
 
 @NgModule({
   bootstrap: [
@@ -23,7 +21,6 @@ import { UserAgreementComponent } from './_components/user-agreement/user-agreem
     HeaderComponent,
     FooterComponent,
     PrivacyPolicyComponent,
-    UserAgreementComponent,
   ],
   imports: [
     AngularMaterialModule,
