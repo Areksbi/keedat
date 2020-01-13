@@ -49,7 +49,11 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  public getToken() {
+  public getIsAuth(): boolean {
+    return this.isAuthenticated;
+  }
+
+  public getToken(): string {
     return this.token;
   }
 
