@@ -9,7 +9,6 @@ export interface RequestRegistrationInterface {
   password: string;
   privacyPolicyConsent: boolean;
   recaptchaToken: string;
-  userAgreementConsent: boolean;
 }
 
 export interface ResponseLoginInterface {
@@ -26,6 +25,5 @@ export interface ResponseRegistrationInterface {
     password: string;
     privacyPolicyConsent: boolean;
     recaptchaToken: string;
-    userAgreementConsent: boolean;
   }
 }
