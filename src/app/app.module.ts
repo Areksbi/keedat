@@ -20,7 +20,6 @@ import { FooterComponent, HeaderComponent, PrivacyPolicyComponent } from './_com
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    PrivacyPolicyComponent,
   ],
   imports: [
     AngularMaterialModule,
