@@ -5,17 +5,31 @@ import { urls } from './_constants/urls.constant';
 
 const routes: Routes = [
   {
-    path: urls.PRIVACY_POLICY,
-    loadChildren: () => import('./privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule),
+    path: urls.ROOT,
+    children: [
+      {
+        path: urls.ROOT,
+        pathMatch: 'full',
+        redirectTo: urls.HOME
+      },
+      {
+        path: urls.ACCOUNT,
+        loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
+      },
+      {
+        path: urls.HOME,
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+      },
+      {
+        path: urls.LEGAL,
+        loadChildren: () => import('./legal/legal.module').then(m => m.LegalModule),
+      },
+      {
+        path: '**',
+        redirectTo: urls.HOME,
+      },
+    ]
   },
-  {
-    path: 'account',
-    loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
-  },
-  {
-    path: '**',
-    redirectTo: urls.HOME,
-  }
 ];
 
 @NgModule({

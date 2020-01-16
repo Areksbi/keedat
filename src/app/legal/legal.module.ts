@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { LegalRoutingModule } from './legal-routing.module';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 @NgModule({
@@ -9,7 +10,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
   ],
   imports: [
     CommonModule,
+    LegalRoutingModule,
   ],
 })
-export class PrivacyPolicyModule {
+export class LegalModule {
 }
