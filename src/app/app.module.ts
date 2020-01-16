@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -9,8 +9,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularMaterialModule } from './_helpers/angular-material.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-import { FooterComponent, HeaderComponent, PrivacyPolicyComponent } from './_components';
+import { FooterComponent, HeaderComponent } from './_components';
 
 @NgModule({
   bootstrap: [
@@ -24,7 +23,6 @@ import { FooterComponent, HeaderComponent, PrivacyPolicyComponent } from './_com
   imports: [
     AngularMaterialModule,
     AppRoutingModule,
-    AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
@@ -36,13 +34,9 @@ import { FooterComponent, HeaderComponent, PrivacyPolicyComponent } from './_com
       }
     })
   ],
-  providers: [
-
-  ],
+  providers: [],
 })
-export class AppModule {
-
-}
+export class AppModule { }
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
