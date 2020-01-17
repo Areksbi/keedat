@@ -16,5 +16,9 @@
   "auth.registration.password.placeholder": "Password",
   "auth.registration.title": "Registration",
 
+  "error.title": "An error occurred!",
+  "error.message.default": "An unknown error occurred!",
+  "error.button": "Okay",
+
   "home.title": "TODO Title"
 }
