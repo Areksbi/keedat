@@ -3,6 +3,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  text-transform: capitalize;
+}
+
 ul {
   display: flex;
   list-style: none;
