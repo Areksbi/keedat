@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { first, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { links } from '../../_constants/links.constant';
 import {
   RequestLoginInterface,
   RequestRegistrationInterface,
@@ -26,6 +28,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
   ) {
   }
 
@@ -84,6 +87,7 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this.router.navigate([links.HOME]);
   }
 
   public registration(
