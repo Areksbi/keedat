@@ -10,7 +10,8 @@ import { AuthService } from '../../auth/_services/auth.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public userIsAuthenticated: boolean;
+  public userIsAuthenticated: boolean = false;
+
   private authListenerSubs: Subscription;
 
   constructor(
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.authService.autoAuthUser();
+    this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;

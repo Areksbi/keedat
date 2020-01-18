@@ -1,5 +1,5 @@
 const errorCodes = require('../enums/errors.enum');
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
 module.exports = (req, res, next) => {
   const url = new URL(`https://www.google.com/recaptcha/api/siteverify`);
