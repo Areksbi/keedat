@@ -1,28 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { concatMap, first } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from '../../_services/auth.service';
 import { links } from '../../../_constants/links.constant';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { ResponseRegistrationInterface } from '../../_interfaces/auth.interface';
+import { SpinnerService } from '../../../_services/spinner.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
   public hiddenPassword = true;
   public isLoading = false;
   public links = links;
   public registerForm: FormGroup;
   public submitted = false;
 
+  private isLoadingSub: Subscription;
+
   constructor(
     private authService: AuthService,
+    private spinnerService: SpinnerService,
     private recaptchaV3Service: ReCaptchaV3Service,
   ) {
   }
@@ -49,6 +53,14 @@ export class RegistrationComponent implements OnInit {
         ]
       }),
     });
+
+    this.isLoading = this.spinnerService.isLoading;
+    this.isLoadingSub = this.spinnerService.isLoadingListener
+      .subscribe((isLoading: boolean) => this.isLoading = isLoading);
+  }
+
+  public ngOnDestroy(): void {
+    this.isLoadingSub.unsubscribe();
   }
 
   public onSubmit(): void {
@@ -58,7 +70,7 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
+    this.spinnerService.showSpinner();
     this.recaptchaV3Service.execute('registration')
       .pipe(
         concatMap((token: string): Observable<ResponseRegistrationInterface> =>
@@ -66,13 +78,11 @@ export class RegistrationComponent implements OnInit {
         first()
       )
       .subscribe(
-        (response: ResponseRegistrationInterface): void => {
-          console.log(response);
-          this.isLoading = false;
+        (): void => {
+          this.spinnerService.hideSpinner();
         },
         (): void => {
-          console.log('fail');
-          this.isLoading = false;
+          this.spinnerService.hideSpinner();
         }
       );
   }

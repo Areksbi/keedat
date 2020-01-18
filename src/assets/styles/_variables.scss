@@ -4,9 +4,12 @@ $breakpoints: (
   dsk: 1280px
 );
 
+$color-background-overlay: rgba(0, 0, 0, 0.2);
+
 $height-header: 64px;
 $margin-general: 1rem;
 $padding-general: 1rem;
 $width-max-page: 1440px;
 
 $z-index-header: 2;
+$z-index-spinner: 3;

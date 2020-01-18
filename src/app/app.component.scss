@@ -3,3 +3,14 @@
 .container {
   margin-top: $height-header;
 }
+
+.spinner {
+  align-items: center;
+  background: $color-background-overlay;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: $z-index-spinner;
+}
