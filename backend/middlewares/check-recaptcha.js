@@ -1,3 +1,4 @@
+const errorCodes = require('../enums/errors.enum');
 const fetch = require("node-fetch");
 
 module.exports = (req, res, next) => {
@@ -17,12 +18,14 @@ module.exports = (req, res, next) => {
         next();
       } else {
         res.status(500).json({
+          code: errorCodes.LOGIN_RECAPTCHA_INVALID,
           message: 'Invalid authentication!'
         });
       }
     })
     .catch(() => {
       res.status(500).json({
+        code: errorCodes.LOGIN_RECAPTCHA_POST_ERROR,
         message: 'Invalid authentication!'
       });
     });
