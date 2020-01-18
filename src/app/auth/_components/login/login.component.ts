@@ -1,25 +1,27 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { concatMap, first } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 import { AuthService } from '../../_services/auth.service';
 import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
+import { SpinnerService } from '../../../_services/spinner.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public hiddenPassword: boolean = true;
   public isLoading: boolean = false;
   public loginForm: FormGroup;
   public submitted: boolean = false;
 
+  private isLoadingSub: Subscription;
   private returnUrl: string;
 
   constructor(
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
     private recaptchaV3Service: ReCaptchaV3Service,
     private route: ActivatedRoute,
     private router: Router,
+    private spinnerService: SpinnerService,
   ) {
   }
 
@@ -48,6 +51,13 @@ export class LoginComponent implements OnInit {
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    this.isLoading = this.spinnerService.isLoading;
+    this.isLoadingSub = this.spinnerService.isLoadingListener
+      .subscribe((isLoading: boolean) => this.isLoading = isLoading);
+  }
+
+  public ngOnDestroy(): void {
+    this.isLoadingSub.unsubscribe();
   }
 
   public onSubmit(): void {
@@ -55,7 +65,7 @@ export class LoginComponent implements OnInit {
 
     if (this.loginForm.invalid) { return; }
 
-    this.isLoading = true;
+    this.spinnerService.showSpinner();
     this.recaptchaV3Service.execute('login')
       .pipe(
         concatMap((token: string): Observable<ResponseLoginInterface> =>
@@ -63,14 +73,14 @@ export class LoginComponent implements OnInit {
         first()
       )
       .subscribe(
-        (response: ResponseLoginInterface): void => {
-          this.isLoading = false;
+        (): void => {
+          this.spinnerService.hideSpinner();
           if (this.returnUrl) {
             this.router.navigate([this.returnUrl]);
           }
         },
         (): void => {
-          this.isLoading = false;
+          this.spinnerService.hideSpinner();
         }
       );
   }
