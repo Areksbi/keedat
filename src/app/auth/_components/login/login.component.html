@@ -7,7 +7,8 @@
   <mat-form-field>
     <input matInput [type]="hiddenPassword ? 'password' : 'text'" formControlName="password"
            required [placeholder]="'auth.login.password.placeholder' | translate" />
-    <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword"></mat-icon>
+    <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword">
+      {{ hiddenPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
     <mat-error *ngIf="loginForm.get('password').invalid">{{ 'auth.login.password.error' | translate }}</mat-error>
   </mat-form-field>
   <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">
