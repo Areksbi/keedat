@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+module.exports = {
   LOGIN_RECAPTCHA_INVALID: 600,
   LOGIN_RECAPTCHA_POST_ERROR: 601,
-});
+};
