@@ -1,4 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { concatMap, first } from 'rxjs/operators';
@@ -19,9 +20,13 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public submitted: boolean = false;
 
+  private returnUrl: string;
+
   constructor(
     private authService: AuthService,
     private recaptchaV3Service: ReCaptchaV3Service,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
   }
 
@@ -41,6 +46,8 @@ export class LoginComponent implements OnInit {
         ]
       }),
     });
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
   }
 
   public onSubmit(): void {
@@ -57,11 +64,12 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         (response: ResponseLoginInterface): void => {
-          console.log(response);
           this.isLoading = false;
+          if (this.returnUrl) {
+            this.router.navigate([this.returnUrl]);
+          }
         },
         (): void => {
-          console.log('fail');
           this.isLoading = false;
         }
       );
