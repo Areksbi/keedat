@@ -1,13 +1,11 @@
 <app-header></app-header>
-<div class="container">
-  <div class="content">
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    <aside *ngIf="!userIsAuthenticated">
-      <app-auth></app-auth>
-    </aside>
-  </div>
+<div class="content">
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <aside *ngIf="!userIsAuthenticated">
+    <app-auth></app-auth>
+  </aside>
 </div>
 <app-footer></app-footer>
 <div class="spinner" *ngIf="isLoading">
