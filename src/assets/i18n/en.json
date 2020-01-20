@@ -22,6 +22,8 @@
   "error.message.default": "An unknown error occurred!",
   "error.button": "Okay",
 
+  "faq.title": "Frequent Asked Questions",
+
   "nav.faq": "FAQ",
   "nav.faq.extended": "Frequent asked questions",
   "nav.privacy-policy": "Privacy Policy",

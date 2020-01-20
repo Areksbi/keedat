@@ -19,6 +19,10 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: urls.FAQ,
+        loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule),
+      },
+      {
         path: urls.HOME,
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
