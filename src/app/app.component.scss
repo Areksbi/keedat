@@ -8,21 +8,30 @@
 }
 
 @include media($from: tbl-p) {
+  aside,
+  main {
+    flex: 1 0 0;
+    width: 100%;
+  }
+
   aside {
-    flex: 1;
     height: 100%;
+    max-width: 100% / 10 * 4;
     position: sticky;
     top: $height-header;
   }
 
   main {
-    flex: 2;
+    max-width: 100% / 10 * 6;
+    position: relative;
   }
 
   .content {
     flex: 1;
+    flex-wrap: wrap;
     margin: 0 auto;
     max-width: $width-max-page;
+    width: 100%;
   }
 }
 
@@ -33,9 +42,6 @@ main {
 
 .content {
   display: flex;
-}
-
-.container {
   margin-top: $height-header;
 }
 
