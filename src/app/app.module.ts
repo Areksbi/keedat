@@ -9,6 +9,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularMaterialModule } from './_helpers/angular-material.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/_helpers/auth.interceptor';
 import { ErrorComponent, FooterComponent, HeaderComponent } from './_components';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
@@ -29,6 +30,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
   imports: [
     AngularMaterialModule,
     AppRoutingModule,
+    AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
