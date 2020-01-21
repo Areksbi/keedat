@@ -17,8 +17,14 @@
   </mat-form-field>
   <div class="registration__consents">
     <mat-checkbox formControlName="consents">
-      <span [innerHTML]="'auth.registration.consents.label' | translate:
-        { 'privacy-policy-link': links.PRIVACY_POLICY }"></span>
+      <span>
+        {{ 'auth.registration.consents.label.before' | translate }}
+        <a [href]="links.PRIVACY_POLICY" target="_blank">
+          {{ 'auth.registration.consents.link' | translate }}
+          <mat-icon matSuffix class="registration__open-in-new">open_in_new</mat-icon>
+        </a>
+        {{ 'auth.registration.consents.label.after' | translate }}
+      </span>
     </mat-checkbox>
     <mat-error *ngIf="(registerForm.get('consents').touched || submitted) && registerForm.get('consents').invalid">
       {{ 'auth.registration.consents.error' | translate }}</mat-error>
