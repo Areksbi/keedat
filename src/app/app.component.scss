@@ -57,7 +57,10 @@ main {
 
   .content {
     flex-wrap: wrap;
-    margin: 0 auto;
+    margin: {
+      left: auto;
+      right: auto;
+    };
     max-width: $width-max-page;
     width: 100%;
   }
