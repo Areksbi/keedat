@@ -1,9 +1,39 @@
 @import "breakpoints";
 @import "variables";
 
+aside,
+main {
+  padding: $padding-general;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  margin-top: $height-header;
+}
+
+.spinner {
+  align-items: center;
+  background: $color-background-overlay;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: $z-index-spinner;
+}
+
 @include media($to: tbl-p) {
+  aside {
+    order: 1;
+  }
+
+  main {
+    order: 2;
+  }
+
   .content {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 }
 
@@ -26,31 +56,9 @@
   }
 
   .content {
-    flex: 1;
     flex-wrap: wrap;
     margin: 0 auto;
     max-width: $width-max-page;
     width: 100%;
   }
-}
-
-aside,
-main {
-  padding: $padding-general;
-}
-
-.content {
-  display: flex;
-  margin-top: $height-header;
-}
-
-.spinner {
-  align-items: center;
-  background: $color-background-overlay;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  position: fixed;
-  width: 100vw;
-  z-index: $z-index-spinner;
 }
