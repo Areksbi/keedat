@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
+import { reducers, metaReducers } from './reducers';
+import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -40,6 +42,13 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
+    }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
     }),
   ],
   providers: [
