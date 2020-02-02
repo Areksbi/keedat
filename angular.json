@@ -133,5 +133,8 @@
       }
     }
   },
-  "defaultProject": "todo-pilot-data-selling"
+  "defaultProject": "todo-pilot-data-selling",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
