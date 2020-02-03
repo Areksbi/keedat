@@ -29,6 +29,6 @@
     <mat-error *ngIf="(registerForm.get('consents').touched || submitted) && registerForm.get('consents').invalid">
       {{ 'auth.registration.consents.error' | translate }}</mat-error>
   </div>
-  <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">
+  <button mat-raised-button color="accent" type="submit" [disabled]="isLoading$ | async">
     {{ 'auth.registration.button' | translate }}</button>
 </form>

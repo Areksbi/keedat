@@ -8,20 +8,19 @@ import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 import { AuthService } from '../../_services/auth.service';
 import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
-import { SpinnerService } from '../../../_services/spinner.service';
+import { SpinnerFacades } from '../../../_store/facades';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   public hiddenPassword: boolean = true;
-  public isLoading: boolean = false;
+  public isLoading$: Observable<boolean>;
   public loginForm: FormGroup;
   public submitted: boolean = false;
 
-  private isLoadingSub: Subscription;
   private returnUrl: string;
 
   constructor(
@@ -29,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private recaptchaV3Service: ReCaptchaV3Service,
     private route: ActivatedRoute,
     private router: Router,
-    private spinnerService: SpinnerService,
+    private spinnerFacade: SpinnerFacades,
   ) {
   }
 
@@ -51,21 +50,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
-    this.isLoading = this.spinnerService.isLoading;
-    this.isLoadingSub = this.spinnerService.isLoadingListener
-      .subscribe((isLoading: boolean) => this.isLoading = isLoading);
+    this.isLoading$ = this.spinnerFacade.isLoading();
   }
 
-  public ngOnDestroy(): void {
-    this.isLoadingSub.unsubscribe();
-  }
 
   public onSubmit(): void {
     this.submitted = true;
 
     if (this.loginForm.invalid) { return; }
 
-    this.spinnerService.showSpinner();
+    this.spinnerFacade.showSpinner();
     this.recaptchaV3Service.execute('login')
       .pipe(
         concatMap((token: string): Observable<ResponseLoginInterface> =>
@@ -74,13 +68,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (): void => {
-          this.spinnerService.hideSpinner();
+          this.spinnerFacade.hideSpinner();
           if (this.returnUrl) {
             this.router.navigate([this.returnUrl]);
           }
         },
         (): void => {
-          this.spinnerService.hideSpinner();
+          this.spinnerFacade.hideSpinner();
         }
       );
   }
