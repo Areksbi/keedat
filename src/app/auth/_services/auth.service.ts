@@ -60,8 +60,8 @@ export class AuthService {
     return this.token;
   }
 
-  public login(email: string, password: string, recaptchaToken: string): Observable<ResponseLoginInterface>  {
-    const authData: RequestLoginInterface = { email, password, recaptchaToken };
+  public login(email: string, password: string): Observable<ResponseLoginInterface>  {
+    const authData: RequestLoginInterface = { email, password, type: 'login' };
     return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, authData)
       .pipe(
         first((response: ResponseLoginInterface) => !!response.token),
@@ -90,15 +90,13 @@ export class AuthService {
     this.router.navigate([links.HOME]);
   }
 
-  public registration(
-    email: string, password: string, consents: boolean, recaptchaToken: string
-  ): Observable<ResponseRegistrationInterface> {
+  public registration(email: string, password: string, consents: boolean): Observable<ResponseRegistrationInterface> {
     const privacyPolicyConsent = consents;
     const authData: RequestRegistrationInterface = {
       email,
       password,
       privacyPolicyConsent,
-      recaptchaToken
+      type: 'registration'
     };
     return this.http.post<ResponseRegistrationInterface>(`${BACKEND_URL}registration`, authData);
   }

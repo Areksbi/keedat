@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { concatMap, first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 import { AuthService } from '../../_services/auth.service';
 import { links } from '../../../_constants/links.constant';
-import { ResponseRegistrationInterface } from '../../_interfaces/auth.interface';
 import { SpinnerFacades } from '../../../_store/facades';
 
 @Component({
@@ -24,7 +21,6 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private recaptchaV3Service: ReCaptchaV3Service,
     private spinnerFacade: SpinnerFacades,
   ) {
   }
@@ -62,12 +58,7 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.recaptchaV3Service.execute('registration')
-      .pipe(
-        concatMap((token: string): Observable<ResponseRegistrationInterface> =>
-          this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value, token)),
-        first()
-      )
+    this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value)
       .subscribe((): void => {
         console.log('Registered');
       });
