@@ -1,9 +1,9 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { concatMap, first } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 import { AuthService } from '../../_services/auth.service';
@@ -57,26 +57,21 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     this.submitted = true;
 
-    if (this.loginForm.invalid) { return; }
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-    this.spinnerFacade.showSpinner();
     this.recaptchaV3Service.execute('login')
       .pipe(
         concatMap((token: string): Observable<ResponseLoginInterface> =>
           this.authService.login(this.f.email.value, this.f.password.value, token)),
         first()
       )
-      .subscribe(
-        (): void => {
-          this.spinnerFacade.hideSpinner();
-          if (this.returnUrl) {
-            this.router.navigate([this.returnUrl]);
-          }
-        },
-        (): void => {
-          this.spinnerFacade.hideSpinner();
+      .subscribe((): void => {
+        if (this.returnUrl) {
+          this.router.navigate([this.returnUrl]);
         }
-      );
+      });
   }
 }
 

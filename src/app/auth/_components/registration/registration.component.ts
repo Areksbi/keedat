@@ -24,8 +24,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private spinnerFacade: SpinnerFacades,
     private recaptchaV3Service: ReCaptchaV3Service,
+    private spinnerFacade: SpinnerFacades,
   ) {
   }
 
@@ -62,22 +62,15 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.spinnerFacade.showSpinner();
-
     this.recaptchaV3Service.execute('registration')
       .pipe(
         concatMap((token: string): Observable<ResponseRegistrationInterface> =>
           this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value, token)),
         first()
       )
-      .subscribe(
-        (): void => {
-          this.spinnerFacade.hideSpinner();
-        },
-        (): void => {
-          this.spinnerFacade.hideSpinner();
-        }
-      );
+      .subscribe((): void => {
+        console.log('Registered');
+      });
   }
 
 }
