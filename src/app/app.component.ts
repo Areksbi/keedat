@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import defaultLanguage from './../assets/i18n/en.json';
 import { AuthService } from './auth/_services/auth.service';
-import { SpinnerService } from './_services/spinner.service';
+import { SpinnerFacades } from './_store/facades';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +13,14 @@ import { SpinnerService } from './_services/spinner.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public isLoading: boolean = false;
+  public isLoading$: Observable<boolean>;
   public userIsAuthenticated: boolean = false;
 
   private authListenerSubs: Subscription;
-  private isLoadingSub: Subscription;
 
   constructor(
     private authService: AuthService,
-    private spinnerService: SpinnerService,
+    private spinnerFacade: SpinnerFacades,
     private translate: TranslateService,
   ) {
     translate.setTranslation('en', defaultLanguage);
@@ -36,14 +35,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.isLoading = this.spinnerService.isLoading;
-    this.isLoadingSub = this.spinnerService.isLoadingListener
-      .subscribe((isLoading: boolean) => this.isLoading = isLoading);
+    this.isLoading$ = this.spinnerFacade.isLoading();
   }
 
   public ngOnDestroy(): void {
     this.authListenerSubs.unsubscribe();
-    this.isLoadingSub.unsubscribe();
   }
 
 }
