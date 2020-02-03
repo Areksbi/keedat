@@ -2,12 +2,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { concatMap, first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 import { AuthService } from '../../_services/auth.service';
-import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
 import { SpinnerFacades } from '../../../_store/facades';
 
 @Component({
@@ -25,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private recaptchaV3Service: ReCaptchaV3Service,
     private route: ActivatedRoute,
     private router: Router,
     private spinnerFacade: SpinnerFacades,
@@ -61,12 +57,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.recaptchaV3Service.execute('login')
-      .pipe(
-        concatMap((token: string): Observable<ResponseLoginInterface> =>
-          this.authService.login(this.f.email.value, this.f.password.value, token)),
-        first()
-      )
+    this.authService.login(this.f.email.value, this.f.password.value)
       .subscribe((): void => {
         if (this.returnUrl) {
           this.router.navigate([this.returnUrl]);

@@ -1,14 +1,14 @@
-export interface RequestLoginInterface {
+import { RequestBaseInterface } from '../../_interfaces';
+
+export interface RequestLoginInterface extends RequestBaseInterface {
   email: string;
   password: string;
-  recaptchaToken: string;
 }
 
-export interface RequestRegistrationInterface {
+export interface RequestRegistrationInterface extends RequestBaseInterface {
   email: string;
   password: string;
   privacyPolicyConsent: boolean;
-  recaptchaToken: string;
 }
 
 export interface ResponseLoginInterface {
