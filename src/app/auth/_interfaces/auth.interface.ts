@@ -1,11 +1,9 @@
-import { RequestBaseInterface } from '../../_interfaces';
-
-export interface RequestLoginInterface extends RequestBaseInterface {
+export interface RequestLoginInterface {
   email: string;
   password: string;
 }
 
-export interface RequestRegistrationInterface extends RequestBaseInterface {
+export interface RequestRegistrationInterface {
   email: string;
   password: string;
   privacyPolicyConsent: boolean;

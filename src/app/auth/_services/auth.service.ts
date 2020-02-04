@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   public login(email: string, password: string): Observable<ResponseLoginInterface>  {
-    const authData: RequestLoginInterface = { email, password, type: 'login' };
+    const authData: RequestLoginInterface = { email, password };
     return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, authData)
       .pipe(
         first((response: ResponseLoginInterface) => !!response.token),
@@ -96,7 +96,6 @@ export class AuthService {
       email,
       password,
       privacyPolicyConsent,
-      type: 'registration'
     };
     return this.http.post<ResponseRegistrationInterface>(`${BACKEND_URL}registration`, authData);
   }

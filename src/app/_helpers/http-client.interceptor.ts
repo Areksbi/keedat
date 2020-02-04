@@ -18,7 +18,8 @@ export class HttpClientInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.spinnerFacade.showSpinner();
 
-    return this.recaptchaV3Service.execute(req.body.type)
+    const action = req.url.replace(/^.*\/\/[^\/]+/, '');
+    return this.recaptchaV3Service.execute(action)
       .pipe(
         first(Boolean),
         concatMap((token: string): Observable<any> => {
