@@ -64,9 +64,8 @@ export class AuthService {
     return this.token;
   }
 
-  public login(email: string, password: string): Observable<ResponseLoginInterface>  {
-    const authData: RequestLoginInterface = { email, password };
-    return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, authData)
+  public login(request: RequestLoginInterface): Observable<ResponseLoginInterface>  {
+    return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, request)
       .pipe(
         first((response: ResponseLoginInterface) => !!response.token),
         tap((response: ResponseLoginInterface) => {

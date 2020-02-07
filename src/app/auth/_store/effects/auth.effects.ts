@@ -24,7 +24,7 @@ export class AuthEffects {
       ofType(requestLogin),
       exhaustMap((action) => {
           const { email, password, returnUrl }: RequestLoginActionInterface = action;
-          return this.authService.login(email, password)
+          return this.authService.login({ email, password })
             .pipe(
               map((response: ResponseLoginInterface) => responseLoginSuccess(response)),
               tap(() => {
