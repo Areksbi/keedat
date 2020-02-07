@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { responseLoginSuccess } from '../actions/auth.actions';
+import { logout, responseLoginSuccess } from '../actions/auth.actions';
 
 
 export const authFeatureKey = 'auth';
@@ -21,7 +21,8 @@ export const initialState: AuthStateInterface = {
 const _authReducer = createReducer(
   initialState,
   on(responseLoginSuccess, (state, { email, expiresIn, token, userId }) =>
-    ({ ...state, email, expiresIn, token, userId }))
+    ({ ...state, email, expiresIn, token, userId })),
+  on(logout, (() => initialState)),
 );
 
 export function authReducer(state: AuthStateInterface | undefined, action: Action) {
