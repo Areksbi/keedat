@@ -1,10 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 
-import { RequestLoginInterface, ResponseLoginInterface } from '../../_interfaces/auth.interface';
+import { RequestLoginActionInterface } from '../../_interfaces/auth-actions.interface';
+import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
 
 export const requestLogin = createAction(
   '[Auth] Login Request',
-  props<RequestLoginInterface>()
+  props<RequestLoginActionInterface>()
 );
 
 export const responseLoginSuccess = createAction(

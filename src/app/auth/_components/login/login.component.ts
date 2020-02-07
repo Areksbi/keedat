@@ -1,8 +1,9 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from '../../_services/auth.service';
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   public submitted: boolean = false;
 
   private returnUrl: string;
+  private routerEventsSub: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -49,7 +51,16 @@ export class LoginComponent implements OnInit {
       }),
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    const returnUrlKey = 'returnUrl';
+    this.routerEventsSub = this.router.events
+      .pipe(
+        filter((val: RouterEvent) => val instanceof NavigationEnd),
+        first((val: RouterEvent) => val.url && val.url.includes(returnUrlKey))
+      )
+      .subscribe(() => {
+        this.returnUrl = this.route.snapshot.queryParams[returnUrlKey];
+      });
+
     this.isLoading$ = this.spinnerFacade.isLoading();
   }
 
@@ -64,11 +75,8 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(requestLogin({
       email: this.f.email.value,
       password: this.f.password.value,
+      returnUrl: this.returnUrl
     }));
-
-    if (this.returnUrl) {
-      this.router.navigate([this.returnUrl]);
-    }
   }
 }
 
