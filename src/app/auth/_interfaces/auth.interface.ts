@@ -10,6 +10,7 @@ export interface RequestRegistrationInterface {
 }
 
 export interface ResponseLoginInterface {
+  email: string;
   expiresIn: number;
   token: string;
   userId: string;

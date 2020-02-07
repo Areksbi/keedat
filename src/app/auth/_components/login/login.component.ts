@@ -3,9 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { AuthService } from '../../_services/auth.service';
+import { requestLogin } from '../../_store/actions/auth.actions';
 import { SpinnerFacades } from '../../../_store/facades';
+import { State } from '../../../_store/reducers';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +28,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private spinnerFacade: SpinnerFacades,
+    private store: Store<State>
   ) {
   }
 
@@ -57,12 +61,14 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.f.email.value, this.f.password.value)
-      .subscribe((): void => {
-        if (this.returnUrl) {
-          this.router.navigate([this.returnUrl]);
-        }
-      });
+    this.store.dispatch(requestLogin({
+      email: this.f.email.value,
+      password: this.f.password.value,
+    }));
+
+    if (this.returnUrl) {
+      this.router.navigate([this.returnUrl]);
+    }
   }
 }
 
