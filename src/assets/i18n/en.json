@@ -8,7 +8,7 @@
 
   "auth.registration.button": "Register",
   "auth.registration.consents.label.before": "I confirm that I have read, consent and agree to our ",
-  "auth.registration.consents.label.after": ", and I am of legal age. I understand that I can change my communication preferences any time in my TODO Account.",
+  "auth.registration.consents.label.after": ", and I am of legal age. I understand that I can change my communication preferences any time in my Keedat Account.",
   "auth.registration.consents.link": "Privacy Policy",
   "auth.registration.consents.error": "Consents are required for the registration",
   "auth.registration.email.error": "Enter a valid email",
@@ -18,7 +18,7 @@
   "auth.registration.password.placeholder": "Password",
   "auth.registration.title": "Registration",
 
-  "copyright": "TODO © {{ date }}",
+  "copyright": "Keedat © {{ date }}",
 
   "error.title": "An error occurred!",
   "error.message.default": "An unknown error occurred!",
@@ -30,5 +30,5 @@
   "nav.faq.extended": "Frequent asked questions",
   "nav.privacy-policy": "Privacy Policy",
 
-  "home.title": "TODO Title"
+  "home.title": "Keedat"
 }

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "todo-pilot-data-selling": {
+    "keedat": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/todo-pilot-data-selling",
+            "outputPath": "dist/keedat",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,18 +73,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "todo-pilot-data-selling:build"
+            "browserTarget": "keedat:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "todo-pilot-data-selling:build:production"
+              "browserTarget": "keedat:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "todo-pilot-data-selling:build"
+            "browserTarget": "keedat:build"
           }
         },
         "test": {
@@ -122,18 +122,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "todo-pilot-data-selling:serve"
+            "devServerTarget": "keedat:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "todo-pilot-data-selling:serve:production"
+              "devServerTarget": "keedat:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "todo-pilot-data-selling",
+  "defaultProject": "keedat",
   "cli": {
     "defaultCollection": "@ngrx/schematics"
   }
