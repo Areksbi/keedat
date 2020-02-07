@@ -12,6 +12,6 @@
       {{ hiddenPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
     <mat-error *ngIf="loginForm.get('password').invalid">{{ 'auth.login.password.error' | translate }}</mat-error>
   </mat-form-field>
-  <button mat-raised-button color="accent" type="submit" [disabled]="isLoading">
+  <button mat-raised-button color="accent" type="submit" [disabled]="isLoading$ | async">
     {{ 'auth.login.button' | translate }}</button>
 </form>

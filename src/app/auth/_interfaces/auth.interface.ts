@@ -1,17 +1,16 @@
 export interface RequestLoginInterface {
   email: string;
   password: string;
-  recaptchaToken: string;
 }
 
 export interface RequestRegistrationInterface {
   email: string;
   password: string;
   privacyPolicyConsent: boolean;
-  recaptchaToken: string;
 }
 
 export interface ResponseLoginInterface {
+  email: string;
   expiresIn: number;
   token: string;
   userId: string;

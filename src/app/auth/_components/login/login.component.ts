@@ -1,35 +1,36 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
-import { concatMap, first } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { Store } from '@ngrx/store';
 
 import { AuthService } from '../../_services/auth.service';
-import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
-import { SpinnerService } from '../../../_services/spinner.service';
+import { requestLogin } from '../../_store/actions/auth.actions';
+import { SpinnerFacades } from '../../../_store/facades';
+import { State } from '../../../_store/reducers';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   public hiddenPassword: boolean = true;
-  public isLoading: boolean = false;
+  public isLoading$: Observable<boolean>;
   public loginForm: FormGroup;
   public submitted: boolean = false;
 
-  private isLoadingSub: Subscription;
   private returnUrl: string;
+  private routerEventsSub: Subscription;
 
   constructor(
     private authService: AuthService,
-    private recaptchaV3Service: ReCaptchaV3Service,
     private route: ActivatedRoute,
     private router: Router,
-    private spinnerService: SpinnerService,
+    private spinnerFacade: SpinnerFacades,
+    private store: Store<State>
   ) {
   }
 
@@ -50,39 +51,32 @@ export class LoginComponent implements OnInit, OnDestroy {
       }),
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
-    this.isLoading = this.spinnerService.isLoading;
-    this.isLoadingSub = this.spinnerService.isLoadingListener
-      .subscribe((isLoading: boolean) => this.isLoading = isLoading);
+    const returnUrlKey = 'returnUrl';
+    this.routerEventsSub = this.router.events
+      .pipe(
+        filter((val: RouterEvent) => val instanceof NavigationEnd),
+        first((val: RouterEvent) => val.url && val.url.includes(returnUrlKey))
+      )
+      .subscribe(() => {
+        this.returnUrl = this.route.snapshot.queryParams[returnUrlKey];
+      });
+
+    this.isLoading$ = this.spinnerFacade.isLoading();
   }
 
-  public ngOnDestroy(): void {
-    this.isLoadingSub.unsubscribe();
-  }
 
   public onSubmit(): void {
     this.submitted = true;
 
-    if (this.loginForm.invalid) { return; }
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-    this.spinnerService.showSpinner();
-    this.recaptchaV3Service.execute('login')
-      .pipe(
-        concatMap((token: string): Observable<ResponseLoginInterface> =>
-          this.authService.login(this.f.email.value, this.f.password.value, token)),
-        first()
-      )
-      .subscribe(
-        (): void => {
-          this.spinnerService.hideSpinner();
-          if (this.returnUrl) {
-            this.router.navigate([this.returnUrl]);
-          }
-        },
-        (): void => {
-          this.spinnerService.hideSpinner();
-        }
-      );
+    this.store.dispatch(requestLogin({
+      email: this.f.email.value,
+      password: this.f.password.value,
+      returnUrl: this.returnUrl
+    }));
   }
 }
 

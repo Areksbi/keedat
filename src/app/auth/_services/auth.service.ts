@@ -4,15 +4,18 @@ import { Router } from '@angular/router';
 
 import { first, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
 import { links } from '../../_constants/links.constant';
+import { logout } from '../_store/actions/auth.actions';
 import {
   RequestLoginInterface,
   RequestRegistrationInterface,
   ResponseLoginInterface,
   ResponseRegistrationInterface,
 } from '../_interfaces/auth.interface';
+import { State } from '../../_store/reducers';
 
 const BACKEND_URL = `${environment.api}/user/`;
 
@@ -29,6 +32,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private store: Store<State>,
   ) {
   }
 
@@ -60,9 +64,8 @@ export class AuthService {
     return this.token;
   }
 
-  public login(email: string, password: string, recaptchaToken: string): Observable<ResponseLoginInterface>  {
-    const authData: RequestLoginInterface = { email, password, recaptchaToken };
-    return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, authData)
+  public login(request: RequestLoginInterface): Observable<ResponseLoginInterface>  {
+    return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, request)
       .pipe(
         first((response: ResponseLoginInterface) => !!response.token),
         tap((response: ResponseLoginInterface) => {
@@ -87,18 +90,16 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this.store.dispatch(logout());
     this.router.navigate([links.HOME]);
   }
 
-  public registration(
-    email: string, password: string, consents: boolean, recaptchaToken: string
-  ): Observable<ResponseRegistrationInterface> {
+  public registration(email: string, password: string, consents: boolean): Observable<ResponseRegistrationInterface> {
     const privacyPolicyConsent = consents;
     const authData: RequestRegistrationInterface = {
       email,
       password,
       privacyPolicyConsent,
-      recaptchaToken
     };
     return this.http.post<ResponseRegistrationInterface>(`${BACKEND_URL}registration`, authData);
   }

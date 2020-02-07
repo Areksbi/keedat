@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AngularMaterialModule } from '../_helpers/angular-material.module';
+import { AngularMaterialModule } from '../_helpers';
 import { AuthContainer } from './auth.container';
-import { environment } from '../../environments/environment';
+import { AuthEffects } from './_store/effects/auth.effects';
+import { authFeatureKey, authReducer } from './_store/reducers/auth.reducer';
 import { LoginComponent, RegistrationComponent } from './_components';
 
 @NgModule({
@@ -23,16 +25,11 @@ import { LoginComponent, RegistrationComponent } from './_components';
   imports: [
     AngularMaterialModule,
     CommonModule,
+    EffectsModule.forFeature([AuthEffects]),
     HttpClientModule,
     ReactiveFormsModule,
-    RecaptchaV3Module,
-    TranslateModule,
-  ],
-  providers: [
-    {
-      provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: environment.recaptcha
-    },
+    StoreModule.forFeature(authFeatureKey, authReducer),
+    TranslateModule
   ],
 })
 export class AuthModule {
