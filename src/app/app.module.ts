@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { NgModule } from '@angular/core';
 
 import { EffectsModule } from '@ngrx/effects';
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -40,6 +41,7 @@ import { reducers, metaReducers } from './_store/reducers';
     BrowserModule,
     EffectsModule.forRoot([AppEffects]),
     HttpClientModule,
+    RecaptchaV3Module,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -72,7 +74,11 @@ import { reducers, metaReducers } from './_store/reducers';
       useClass: HttpClientInterceptor,
       multi: true,
     },
-  ],
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: environment.recaptcha,
+    },
+  ]
 })
 export class AppModule { }
 
