@@ -4,15 +4,18 @@ import { Router } from '@angular/router';
 
 import { first, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
 import { links } from '../../_constants/links.constant';
+import { logout } from '../_store/actions/auth.actions';
 import {
   RequestLoginInterface,
   RequestRegistrationInterface,
   ResponseLoginInterface,
   ResponseRegistrationInterface,
 } from '../_interfaces/auth.interface';
+import { State } from '../../_store/reducers';
 
 const BACKEND_URL = `${environment.api}/user/`;
 
@@ -29,6 +32,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private store: Store<State>,
   ) {
   }
 
@@ -87,6 +91,7 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
+    this.store.dispatch(logout());
     this.router.navigate([links.HOME]);
   }
 

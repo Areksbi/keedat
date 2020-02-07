@@ -16,3 +16,7 @@ export const responseLoginSuccess = createAction(
 export const responseLoginError = createAction(
   '[Auth] Login Response Error',
 );
+
+export const logout = createAction(
+  '[Auth] Logout',
+);
