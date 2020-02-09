@@ -1,0 +1,34 @@
+{
+  "auth.login.button": "Login",
+  "auth.login.email.error": "Enter a valid email",
+  "auth.login.email.placeholder": "Email",
+  "auth.login.password.error": "Enter a valid password",
+  "auth.login.password.placeholder": "Password",
+  "auth.login.title": "Login",
+
+  "auth.registration.button": "Register",
+  "auth.registration.consents.label.before": "I confirm that I have read, consent and agree to our ",
+  "auth.registration.consents.label.after": ", and I am of legal age. I understand that I can change my communication preferences any time in my Keedat Account.",
+  "auth.registration.consents.link": "Privacy Policy",
+  "auth.registration.consents.error": "Consents are required for the registration",
+  "auth.registration.email.error": "Enter a valid email",
+  "auth.registration.email.placeholder": "Email",
+  "auth.registration.password.error.max-length": "Enter at least 8 characters",
+  "auth.registration.password.error.required": "Enter a valid password",
+  "auth.registration.password.placeholder": "Password",
+  "auth.registration.title": "Registration",
+
+  "copyright": "Keedat © {{ date }}",
+
+  "error.title": "An error occurred!",
+  "error.message.default": "An unknown error occurred!",
+  "error.button": "Okay",
+
+  "faq.title": "Frequent Asked Questions",
+
+  "nav.faq": "FAQ",
+  "nav.faq.extended": "Frequent asked questions",
+  "nav.privacy-policy": "Privacy Policy",
+
+  "home.title": "Keedat"
+}

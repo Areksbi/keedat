@@ -1,0 +1,17 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput type="email" formControlName="email" required
+           [placeholder]="'auth.login.email.placeholder' | translate" />
+    <mat-error *ngIf="loginForm.get('email').invalid">{{ 'auth.login.email.error' | translate }}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [type]="hiddenPassword ? 'password' : 'text'" formControlName="password"
+           required [placeholder]="'auth.login.password.placeholder' | translate" />
+    <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword"
+              *ngIf="(loginForm.get('password').dirty && loginForm.get('password').value) || !hiddenPassword">
+      {{ hiddenPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+    <mat-error *ngIf="loginForm.get('password').invalid">{{ 'auth.login.password.error' | translate }}</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="accent" type="submit" [disabled]="isLoading$ | async">
+    {{ 'auth.login.button' | translate }}</button>
+</form>

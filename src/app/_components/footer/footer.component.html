@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <p class="mat-small">{{ 'copyright' | translate:{ date: currentYear } }}</p>
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a [routerLink]="links.PRIVACY_POLICY" class="mat-small">{{ 'nav.privacy-policy' | translate }}</a>
+    </li>
+    <li>
+      <a [routerLink]="links.FAQ" class="mat-small">
+        <abbr [title]="'nav.faq.extended' | translate">{{ 'nav.faq' | translate }}</abbr></a>
+    </li>
+  </ul>
+</mat-toolbar>

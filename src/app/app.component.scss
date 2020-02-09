@@ -1,0 +1,67 @@
+@import "breakpoints";
+@import "variables";
+
+aside,
+main {
+  padding: $padding-general;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  margin-top: $height-header;
+}
+
+.spinner {
+  align-items: center;
+  background: $color-background-overlay;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: $z-index-spinner;
+}
+
+@include media($to: tbl-p) {
+  aside {
+    order: 1;
+  }
+
+  main {
+    order: 2;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+}
+
+@include media($from: tbl-p) {
+  aside,
+  main {
+    flex: 1 0 0;
+    width: 100%;
+  }
+
+  aside {
+    height: 100%;
+    max-width: 100% / 10 * 4;
+    position: sticky;
+    top: $height-header;
+  }
+
+  main {
+    position: relative;
+  }
+
+  .content {
+    flex-wrap: wrap;
+    margin: {
+      left: auto;
+      right: auto;
+    };
+    max-width: $width-max-page;
+    width: 100%;
+  }
+}

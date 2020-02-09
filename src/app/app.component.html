@@ -1,0 +1,13 @@
+<app-header></app-header>
+<div class="content">
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <aside *ngIf="!userIsAuthenticated">
+    <app-auth></app-auth>
+  </aside>
+</div>
+<app-footer></app-footer>
+<div class="spinner" *ngIf="isLoading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
