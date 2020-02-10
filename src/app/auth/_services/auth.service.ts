@@ -26,7 +26,7 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean;
   private token: string;
-  private tokenTimer: NodeJS.Timer;
+  private tokenTimer: number;
   private userId: string;
 
   constructor(
