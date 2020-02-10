@@ -2,11 +2,11 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { hideSpinner, showSpinner } from '../actions';
 
-export interface SpinnerState {
+export interface SpinnerStateInterface {
   loading: number;
 }
 
-export const initialState: SpinnerState = {
+export const initialState: SpinnerStateInterface = {
   loading: 0,
 };
 
@@ -16,6 +16,6 @@ const _spinnerReducers = createReducer(
   on(showSpinner, state => ({ ...state, loading: state.loading + 1 })),
 );
 
-export function spinnerReducers(state: SpinnerState | undefined, action: Action) {
+export function spinnerReducers(state: SpinnerStateInterface | undefined, action: Action) {
   return _spinnerReducers(state, action);
 }

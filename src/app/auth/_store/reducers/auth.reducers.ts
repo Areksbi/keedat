@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+
 import { logout, responseLoginSuccess } from '../actions/auth.actions';
 
 
@@ -18,13 +19,13 @@ export const initialState: AuthStateInterface = {
   userId: '',
 };
 
-const _authReducer = createReducer(
+const _authReducers = createReducer(
   initialState,
   on(responseLoginSuccess, (state, { email, expiresIn, token, userId }) =>
     ({ ...state, email, expiresIn, token, userId })),
   on(logout, (() => initialState)),
 );
 
-export function authReducer(state: AuthStateInterface | undefined, action: Action) {
-  return _authReducer(state, action);
+export function authReducers(state: AuthStateInterface | undefined, action: Action) {
+  return _authReducers(state, action);
 }

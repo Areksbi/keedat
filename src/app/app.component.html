@@ -3,7 +3,7 @@
   <main>
     <router-outlet></router-outlet>
   </main>
-  <aside *ngIf="!userIsAuthenticated">
+  <aside *ngIf="!(userIsAuthenticated$ | async)">
     <app-auth></app-auth>
   </aside>
 </div>
