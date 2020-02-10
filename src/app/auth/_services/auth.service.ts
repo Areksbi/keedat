@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { first, tap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
@@ -17,13 +17,13 @@ import {
 } from '../_interfaces/auth.interface';
 import { State } from '../../_store/reducers';
 
+
 const BACKEND_URL = `${environment.api}/user/`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated: boolean;
   private token: string;
   private tokenTimer: NodeJS.Timer;
   private userId: string;
@@ -44,14 +44,9 @@ export class AuthService {
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
       this.token = authInformation.token;
-      this.isAuthenticated = true;
       this.userId = authInformation.userId;
       this.setAuthTimer(expiresIn / 1000);
     }
-  }
-
-  public getIsAuth(): boolean {
-    return this.isAuthenticated;
   }
 
   public getToken(): string {
@@ -67,7 +62,6 @@ export class AuthService {
           this.token = token;
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
-          this.isAuthenticated = true;
           this.userId = response.userId;
           const now = new Date();
           const expiration = new Date(now.getTime() + expiresInDuration * 1000);
@@ -78,7 +72,6 @@ export class AuthService {
 
   public logout(): void {
     this.token = null;
-    this.isAuthenticated = false;
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
