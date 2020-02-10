@@ -23,7 +23,6 @@ const BACKEND_URL = `${environment.api}/user/`;
   providedIn: 'root'
 })
 export class AuthService {
-  private authStatusListener = new Subject<boolean>();
   private isAuthenticated: boolean;
   private token: string;
   private tokenTimer: NodeJS.Timer;
@@ -47,13 +46,8 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
-      this.authStatusListener.next(true);
       this.setAuthTimer(expiresIn / 1000);
     }
-  }
-
-  public getAuthStatusListener(): Observable<boolean> {
-    return this.authStatusListener.asObservable();
   }
 
   public getIsAuth(): boolean {
@@ -75,7 +69,6 @@ export class AuthService {
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
           this.userId = response.userId;
-          this.authStatusListener.next(true);
           const now = new Date();
           const expiration = new Date(now.getTime() + expiresInDuration * 1000);
           this.saveAuthData(token, expiration, this.userId);
@@ -86,7 +79,6 @@ export class AuthService {
   public logout(): void {
     this.token = null;
     this.isAuthenticated = false;
-    this.authStatusListener.next(false);
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();

@@ -1,35 +1,28 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { links } from '../../_constants/links.constant';
 import { AuthService } from '../../auth/_services/auth.service';
+import { AuthFacade } from '../../auth/_store/facades/auth.facades';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   public links = links;
-  public userIsAuthenticated: boolean;
-  private authListenerSubs: Subscription;
+  public userIsAuthenticated$: Observable<boolean>;
 
   constructor(
+    private authFacade: AuthFacade,
     private authService: AuthService
   ) {
   }
 
   public ngOnInit(): void {
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authListenerSubs = this.authService.getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-      });
-  }
-
-  public ngOnDestroy(): void {
-    this.authListenerSubs.unsubscribe();
+    this.userIsAuthenticated$ = this.authFacade.getIsAuth();
   }
 
   public onLogout(): void {
