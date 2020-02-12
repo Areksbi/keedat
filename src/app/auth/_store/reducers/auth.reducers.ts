@@ -1,28 +1,34 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
-import { logout, responseLoginSuccess } from '../actions/auth.actions';
+import { logout, responseLoginSuccess, setAuthDataFromStorage } from '../actions/auth.actions';
 
 
 export const authFeatureKey = 'auth';
 
 export interface AuthStateInterface {
   email: string;
-  expiresIn: number;
+  expirationDate: string;
   token: string;
   userId: string;
 }
 
 export const initialState: AuthStateInterface = {
   email: '',
-  expiresIn: 0,
+  expirationDate: '',
   token: '',
   userId: '',
 };
 
 const _authReducers = createReducer(
   initialState,
-  on(responseLoginSuccess, (state, { email, expiresIn, token, userId }) =>
-    ({ ...state, email, expiresIn, token, userId })),
+  on(responseLoginSuccess, (state: AuthStateInterface, { email, expiresIn, token, userId }) => {
+    const now = new Date();
+    const expiration = new Date(now.getTime() + expiresIn * 1000);
+    const expirationDate = expiration.toISOString();
+    return { ...state, email, expirationDate, token, userId };
+  }),
+  on(setAuthDataFromStorage, (state: AuthStateInterface, { email, expirationDate, token, userId }) =>
+    ({ ...state, email, expirationDate, token, userId })),
   on(logout, (() => initialState)),
 );
 

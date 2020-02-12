@@ -41,7 +41,7 @@ export class AuthService {
       return;
     }
     const now = new Date();
-    const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+    const expiresIn = new Date(authInformation.expirationDate).getTime() - now.getTime();
     if (expiresIn > 0) {
       this.token = authInformation.token;
       this.userId = authInformation.userId;
@@ -64,8 +64,8 @@ export class AuthService {
           this.setAuthTimer(expiresInDuration);
           this.userId = response.userId;
           const now = new Date();
-          const expiration = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expiration, this.userId);
+          const expiration = new Date(now.getTime() + expiresInDuration * 1000).toISOString();
+          this.saveAuthData(response.email, expiration, token, this.userId);
         })
       );
   }
@@ -89,7 +89,8 @@ export class AuthService {
     return this.http.post<ResponseRegistrationInterface>(`${BACKEND_URL}registration`, authData);
   }
 
-  private getAuthData() {
+  public getAuthData() {
+    const email = localStorage.getItem('email');
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
@@ -97,21 +98,24 @@ export class AuthService {
       return;
     }
     return {
+      email,
+      expirationDate: new Date(expirationDate).toISOString(),
       token,
-      expirationDate: new Date(expirationDate),
       userId
     }
   }
 
   private clearAuthData() {
+    localStorage.removeItem('email');
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
   }
 
-  private saveAuthData(token: any, expirationDate: Date, userId: string) {
+  private saveAuthData(email: string, expirationDate: string, token: string, userId: string) {
+    localStorage.setItem('email', email);
     localStorage.setItem('token', token);
-    localStorage.setItem('expiration', expirationDate.toISOString());
+    localStorage.setItem('expiration', expirationDate);
     localStorage.setItem('userId', userId);
   }
 

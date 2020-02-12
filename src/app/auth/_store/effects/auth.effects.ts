@@ -36,4 +36,16 @@ export class AuthEffects {
       )
     )
   );
+
+  // @Effect()
+  // setFromStorage$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(getAuthDataFromStorage),
+  //     tap(() => {
+  //         const { email, expirationDate, token, userId } = this.authService.getAuthData();
+  //         this.store.dispatch(setAuthDataFromStorage({ userId, token, expirationDate, email }));
+  //       }
+  //     )
+  //   )
+  // );
 }
