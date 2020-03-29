@@ -1,4 +1,4 @@
-const errorCodes = require('../enums/errors.enum');
+const responseCodes = require('../constants/response-codes.constant');
 const fetch = require('node-fetch');
 
 module.exports = (req, res, next) => {
@@ -18,15 +18,15 @@ module.exports = (req, res, next) => {
         next();
       } else {
         res.status(500).json({
-          code: errorCodes.LOGIN_RECAPTCHA_INVALID,
-          message: 'Invalid authentication!'
+          code: responseCodes.LOGIN_RECAPTCHA_INVALID.code,
+          message: responseCodes.LOGIN_RECAPTCHA_INVALID.message
         });
       }
     })
     .catch(() => {
       res.status(500).json({
-        code: errorCodes.LOGIN_RECAPTCHA_POST_ERROR,
-        message: 'Invalid authentication!'
+        code: responseCodes.LOGIN_RECAPTCHA_POST_ERROR.code,
+        message: responseCodes.LOGIN_RECAPTCHA_POST_ERROR.message
       });
     });
 };

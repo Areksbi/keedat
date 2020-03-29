@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../../_services/auth.service';
-import { getIsAuth } from '../selectors/auth.selectors';
+import { getEmail, getIsAuth, getUserId } from '../selectors/auth.selectors';
 import { setAuthDataFromStorage } from '../actions/auth.actions';
 import { State } from '../../../_store/reducers';
 
@@ -18,6 +18,18 @@ export class AuthFacade {
     private authService: AuthService,
     private store: Store<State>
   ) { }
+
+  public getEmail(): Observable<string> {
+    return this.store.pipe(
+      select(getEmail),
+    )
+  }
+
+  public getUserId(): Observable<string> {
+    return this.store.pipe(
+      select(getUserId),
+    )
+  }
 
   public getIsAuth(): Observable<boolean> {
     return this.store.pipe(

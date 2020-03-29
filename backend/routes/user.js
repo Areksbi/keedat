@@ -10,4 +10,6 @@ router.post('/registration', checkRecaptcha, UserController.createUser);
 
 router.post('/login', checkRecaptcha, UserController.userLogin);
 
+router.delete('/delete/:id', checkRecaptcha, UserController.userDelete);
+
 module.exports = router;

@@ -1,0 +1,26 @@
+<h2>{{ 'account.title' | translate }}</h2>
+
+<section>
+  <h3>{{ 'account.data.title' | translate }}</h3>
+
+  <section>
+    <mat-form-field>
+      <input matInput type="email" [readonly]="!isAccountUpdating" [value]="email$ | async" [required]="isAccountUpdating"
+             [placeholder]="'account.data.email.placeholder' | translate">
+    </mat-form-field>
+    <button *ngIf="!isAccountUpdating" mat-raised-button color="accent" type="submit" [disabled]="isLoading$ | async"
+            (click)="isAccountUpdating = true">
+      {{ 'account.data.update.button.enable' | translate }}</button>
+    <button *ngIf="isAccountUpdating" mat-raised-button color="accent" type="submit" [disabled]="isLoading$ | async">
+      {{ 'account.data.update.button.submit' | translate }}</button>
+    <button *ngIf="isAccountUpdating" mat-raised-button type="reset" [disabled]="isLoading$ | async"
+      (click)="isAccountUpdating = false">
+      {{ 'account.data.update.button.cancel' | translate }}</button>
+  </section>
+
+  <section>
+    <button mat-raised-button color="warn" type="submit" [disabled]="isLoading$ | async" (click)="deleteAccount()">
+      {{ 'account.delete.button' | translate }}</button>
+  </section>
+
+</section>

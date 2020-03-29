@@ -1,4 +1,12 @@
 {
+  "account.title": "Account",
+  "account.data.title": "Your data",
+  "account.data.email.placeholder": "Your email",
+  "account.data.update.button.cancel": "Cancel update data",
+  "account.data.update.button.enable": "Enable update data",
+  "account.data.update.button.submit": "Update data",
+  "account.delete.button": "Delete account",
+
   "auth.login.button": "Login",
   "auth.login.email.error": "Enter a valid email",
   "auth.login.email.placeholder": "Email",

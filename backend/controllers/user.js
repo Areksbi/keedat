@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const responseCodes = require('../constants/response-codes.constant');
 const User = require('../models/user');
 
 exports.createUser = (req, res, next) => {
@@ -62,10 +63,29 @@ exports.userLogin = (req, res, next) => {
         userId: fetchedUser._id
       });
     })
-    .catch(err => {
-      console.log(err);
-      return res.status(401).json({
+    .catch(err =>
+      res.status(401).json({
         message: 'Invalid authentication credentials!'
-      });
-    });
+      }));
+};
+
+exports.userDelete = (req, res, next) => {
+  User.deleteOne({ _id: req.params.id })
+    .then((response) => {
+      if (response.deletedCount > 0) {
+        return res.status(200).json({
+          code: responseCodes.ACCOUNT_DELETE_SUCCESS.code,
+          message: responseCodes.ACCOUNT_DELETE_SUCCESS.message
+        });
+      }
+      return res.status(500).json({
+        code: responseCodes.ACCOUNT_DELETE_NOTHING.code,
+        message: responseCodes.ACCOUNT_DELETE_NOTHING.message
+      })
+    })
+    .catch(() =>
+      res.status(500).json({
+        code: responseCodes.ACCOUNT_DELETE_ERROR.code,
+        message: responseCodes.ACCOUNT_DELETE_ERROR.message
+      }));
 };

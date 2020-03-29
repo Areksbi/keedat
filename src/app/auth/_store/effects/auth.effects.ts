@@ -18,20 +18,19 @@ export class AuthEffects {
     private router: Router,
   ) {}
 
-  @Effect()
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(requestLogin),
       exhaustMap((action) => {
-          const { email, password, returnUrl }: RequestLoginActionInterface = action;
-          return this.authService.login({ email, password })
-            .pipe(
-              map((response: ResponseLoginInterface) => responseLoginSuccess(response)),
-              tap(() => {
-                if (returnUrl) this.router.navigate([returnUrl]);
-              }),
-              catchError(() => responseLoginError)
-            )
+        const { email, password, returnUrl }: RequestLoginActionInterface = action;
+        return this.authService.login({ email, password })
+          .pipe(
+            map((response: ResponseLoginInterface) => responseLoginSuccess(response)),
+            tap(() => {
+              if (returnUrl) this.router.navigate([returnUrl]);
+            }),
+            catchError(() => responseLoginError)
+          )
         }
       )
     )

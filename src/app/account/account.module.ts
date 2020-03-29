@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AccountOverviewComponent } from './account-overview/account-overview.component';
+import { AccountContainer } from './account.component';
+import { AccountOverviewComponent } from './_components/account-overview/account-overview.component';
 import { AccountRoutingModule } from './account-routing.module';
+import { AngularMaterialModule } from '../_helpers';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
     AccountOverviewComponent,
+    AccountContainer,
   ],
   imports: [
     AccountRoutingModule,
-    CommonModule
+    AngularMaterialModule,
+    CommonModule,
+    TranslateModule,
   ],
 })
 export class AccountModule {
