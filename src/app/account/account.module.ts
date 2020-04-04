@@ -6,6 +6,7 @@ import { AccountOverviewComponent } from './_components/account-overview/account
 import { AccountRoutingModule } from './account-routing.module';
 import { AngularMaterialModule } from '../_helpers';
 import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     AngularMaterialModule,
     CommonModule,
     TranslateModule,
+    ReactiveFormsModule,
   ],
 })
 export class AccountModule {

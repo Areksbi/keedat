@@ -69,10 +69,76 @@ exports.userLogin = (req, res, next) => {
       }));
 };
 
+exports.userUpdate = async (req, res, next) => {
+  const reqId = req.params.id;
+  const reqEmail = req.body.email;
+  const reqPassword = req.body.password;
+  const reqNewPassword = req.body.newPassword;
+  const $set = {};
+
+  if (reqEmail) {
+    $set.email = reqEmail;
+  }
+  if (reqPassword && reqNewPassword) {
+    const isPasswordCorrect = await User.findById(reqId)
+      .then(user => {
+        if (!user) {
+          return res.status(401).json({
+            code: responseCodes.ACCOUNT_UPDATE_INVALID_PASSWORD_SUCCESS.code,
+            message: responseCodes.ACCOUNT_UPDATE_INVALID_PASSWORD_SUCCESS.message,
+          });
+        }
+        return bcrypt.compare(reqPassword, user.password);
+      });
+
+    if (isPasswordCorrect) {
+      $set.password = await bcrypt.hash(reqNewPassword, 10);
+    }
+  }
+
+  if (Object.keys($set).length <= 0) {
+    return res.status(500).json({
+      code: responseCodes.ACCOUNT_UPDATE_NO_BODY_SUCCESS.code,
+      message: responseCodes.ACCOUNT_UPDATE_NO_BODY_SUCCESS.message,
+    });
+  }
+
+  User.findOneAndUpdate({_id: reqId}, { $set })
+    .then((user) => {
+      if (user) {
+        User.findById(user._id)
+          .then(updatedUser =>
+            res.status(200).json({
+              code: responseCodes.ACCOUNT_UPDATE_SUCCESS.code,
+              message: responseCodes.ACCOUNT_UPDATE_SUCCESS.message,
+              result: {
+                email: updatedUser.email
+              }
+            }))
+          .catch(() =>
+            res.status(500).json({
+              code: responseCodes.ACCOUNT_RETRIEVE_AFTER_UPDATE_ERROR.code,
+              message: responseCodes.ACCOUNT_RETRIEVE_AFTER_UPDATE_ERROR.message,
+            }))
+      } else {
+        return res.status(500).json({
+          code: responseCodes.ACCOUNT_UPDATE_NO_RESPONSE_ERROR.code,
+          message: responseCodes.ACCOUNT_UPDATE_NO_RESPONSE_ERROR.message
+        })
+      }
+    })
+    .catch(() =>
+      res.status(500).json({
+        code: responseCodes.ACCOUNT_UPDATE_ERROR.code,
+        message: responseCodes.ACCOUNT_UPDATE_ERROR.message
+      }));
+
+};
+
 exports.userDelete = (req, res, next) => {
-  User.deleteOne({ _id: req.params.id })
+  User.findByIdAndDelete(req.params.id)
     .then((response) => {
-      if (response.deletedCount > 0) {
+      if (response) {
         return res.status(200).json({
           code: responseCodes.ACCOUNT_DELETE_SUCCESS.code,
           message: responseCodes.ACCOUNT_DELETE_SUCCESS.message

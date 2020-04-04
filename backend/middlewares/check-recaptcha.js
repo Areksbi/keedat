@@ -3,10 +3,19 @@ const fetch = require('node-fetch');
 
 module.exports = (req, res, next) => {
   const url = new URL(`https://www.google.com/recaptcha/api/siteverify`);
-  const token = req.body.recaptchaToken;
+  const getToken = () => {
+    switch (req.method.toLowerCase()) {
+      case 'delete':
+      case 'get':
+        return req.query.recaptchaToken;
+      case 'post':
+      case 'put':
+        return req.body.recaptchaToken;
+    }
+  };
   const params = {
     secret: process.env.GOOGLE_RECAPTCHA_V3,
-    response: token
+    response: getToken()
   };
   url.search = new URLSearchParams(params).toString();
   fetch(url, {

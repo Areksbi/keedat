@@ -54,3 +54,8 @@ mat-form-field {
 .mat-checkbox-layout .mat-checkbox-label {
   line-height: 1.5;
 }
+
+.mat-input-element[readonly],
+.mat-input-element[readonly]::placeholder {
+  opacity: .5;
+}
