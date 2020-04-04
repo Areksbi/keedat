@@ -1,0 +1,53 @@
+<h2>{{ 'account.title' | translate }}</h2>
+
+<section>
+  <h3>{{ 'account.overview.title' | translate }}</h3>
+
+  <div class="overview">
+    <section class="update" [formGroup]="updateForm">
+      <h4>{{ 'account.data.update.title' | translate }}</h4>
+
+      <mat-form-field>
+        <input matInput type="email" [disabled]="!isAccountUpdating" [readonly]="!isAccountUpdating" formControlName="email"
+               [placeholder]="'account.data.email.placeholder' | translate">
+        <mat-error *ngIf="updateForm.get('email').invalid">{{ 'account.data.email.error' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [type]="hiddenPassword ? 'password' : 'text'" formControlName="password" [disabled]="!isAccountUpdating" [readonly]="!isAccountUpdating"
+               [placeholder]="'account.data.password.placeholder' | translate" />
+        <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword"
+                  *ngIf="(updateForm.get('password').dirty && updateForm.get('password').value) || !hiddenPassword">
+          {{ hiddenPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-error *ngIf="updateForm.get('password').invalid">{{ 'account.data.password.error' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [type]="hiddenNewPassword ? 'password' : 'text'" formControlName="newPassword" [disabled]="!isAccountUpdating" [readonly]="!isAccountUpdating"
+               [placeholder]="'account.data.password.placeholder.new' | translate" />
+        <mat-icon matSuffix (click)="hiddenNewPassword = !hiddenNewPassword"
+                  *ngIf="(updateForm.get('newPassword').dirty && updateForm.get('newPassword').value) || !hiddenNewPassword">
+          {{ hiddenNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        <mat-error *ngIf="updateForm.get('newPassword').invalid">{{ 'account.data.password.error.new' | translate }}</mat-error>
+      </mat-form-field>
+
+      <button *ngIf="!isAccountUpdating" mat-raised-button type="submit" [disabled]="isLoading$ | async"
+              (click)="isAccountUpdating = true">
+        {{ 'account.data.update.button.enable' | translate }}</button>
+      <button *ngIf="isAccountUpdating" mat-raised-button color="accent" type="submit" [disabled]="isLoading$ | async"
+              (click)="updateAccount()">
+        {{ 'account.data.update.button.submit' | translate }}</button>
+      <button *ngIf="isAccountUpdating" mat-raised-button type="reset" [disabled]="isLoading$ | async"
+              (click)="isAccountUpdating = false">
+        {{ 'account.data.update.button.cancel' | translate }}</button>
+    </section>
+
+    <section class="delete">
+      <h4>{{ 'account.delete.title' | translate }}</h4>
+      <p class="delete__text"><mat-icon matSuffix>warning</mat-icon>{{ 'account.delete.text' | translate }}</p>
+      <button mat-raised-button color="warn" type="submit" [disabled]="isLoading$ | async" (click)="deleteAccount()">
+        {{ 'account.delete.button' | translate }}</button>
+    </section>
+  </div>
+
+</section>

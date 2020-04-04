@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AccountOverviewComponent } from './account-overview/account-overview.component';
+import { AccountContainer } from './account.component';
+import { AccountOverviewComponent } from './_components/account-overview/account-overview.component';
 import { urls } from '../_constants/urls.constant';
 
 const routes: Routes = [
   {
     path: '',
+    component: AccountContainer,
     children: [
       {
         path: '',

@@ -2,10 +2,10 @@
   <h1><a [routerLink]="links.HOME">{{ 'home.title' | translate }}</a></h1>
   <span class="spacer"></span>
   <ul>
-    <li *ngIf="userIsAuthenticated">
+    <li *ngIf="userIsAuthenticated$ | async">
       <a mat-button [routerLink]="links.ACCOUNT">Account</a>
     </li>
-    <li *ngIf="userIsAuthenticated">
+    <li *ngIf="userIsAuthenticated$ | async">
       <button mat-button (click)="onLogout()">Logout</button>
     </li>
   </ul>

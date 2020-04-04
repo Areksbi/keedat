@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AngularMaterialModule } from '../_helpers';
 import { AuthContainer } from './auth.container';
 import { AuthEffects } from './_store/effects/auth.effects';
-import { authFeatureKey, authReducer } from './_store/reducers/auth.reducer';
+import { authFeatureKey, authReducers } from './_store/reducers/auth.reducers';
 import { LoginComponent, RegistrationComponent } from './_components';
 
 @NgModule({
@@ -28,7 +28,7 @@ import { LoginComponent, RegistrationComponent } from './_components';
     EffectsModule.forFeature([AuthEffects]),
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forFeature(authFeatureKey, authReducer),
+    StoreModule.forFeature(authFeatureKey, authReducers),
     TranslateModule
   ],
 })

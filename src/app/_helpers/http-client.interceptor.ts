@@ -34,12 +34,14 @@ export class HttpClientInterceptor implements HttpInterceptor {
     const tokenName = 'recaptchaToken';
 
     switch (req.method.toLowerCase()) {
+      case 'delete':
       case 'get':
         return req.clone({
-          params: req.params.set(tokenName, tokenName)
+          params: req.params.set(tokenName, token)
         });
 
       case 'post':
+      case 'put':
         if (req.body instanceof FormData) {
           return req.clone({
             body: req.body.append(tokenName, token)
