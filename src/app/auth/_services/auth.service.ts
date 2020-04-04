@@ -46,6 +46,8 @@ export class AuthService {
       this.token = authInformation.token;
       this.userId = authInformation.userId;
       this.setAuthTimer(expiresIn / 1000);
+    } else {
+      this.logout();
     }
   }
 
@@ -105,6 +107,10 @@ export class AuthService {
     }
   }
 
+  public setEmailInStorage(email: string) {
+    localStorage.setItem('email', email);
+  }
+
   private clearAuthData() {
     localStorage.removeItem('email');
     localStorage.removeItem('token');
@@ -113,7 +119,7 @@ export class AuthService {
   }
 
   private saveAuthData(email: string, expirationDate: string, token: string, userId: string) {
-    localStorage.setItem('email', email);
+    this.setEmailInStorage(email);
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate);
     localStorage.setItem('userId', userId);

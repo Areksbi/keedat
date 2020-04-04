@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { AuthStateInterface } from '../reducers/auth.reducers';
 import { RequestLoginActionInterface } from '../../_interfaces/auth-actions.interface';
 import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
+import { RequestUpdateAccount, ResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
 
 export const requestLogin = createAction(
   '[Auth] Login Request',
@@ -29,4 +30,18 @@ export const setAuthDataFromStorage = createAction(
 
 export const logout = createAction(
   '[Auth] Logout',
+);
+
+export const requestUpdateUser = createAction(
+  '[User] Update User Request',
+  props<{id: string, body: RequestUpdateAccount}>()
+);
+
+export const responseUpdateUserSuccess = createAction(
+  '[User] Update User Response Success',
+  props<ResponseUpdateAccount>()
+);
+
+export const responseUpdateUserError = createAction(
+  '[User] Update User Response Error',
 );

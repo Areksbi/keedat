@@ -4,8 +4,7 @@ import { Observable, of } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
 
-import { AuthService } from '../../_services/auth.service';
-import { getIsAuth } from '../selectors/auth.selectors';
+import { getEmail, getIsAuth, getUserId } from '../selectors/auth.selectors';
 import { setAuthDataFromStorage } from '../actions/auth.actions';
 import { State } from '../../../_store/reducers';
 
@@ -15,9 +14,20 @@ import { State } from '../../../_store/reducers';
 export class AuthFacade {
 
   constructor(
-    private authService: AuthService,
     private store: Store<State>
   ) { }
+
+  public getEmail(): Observable<string> {
+    return this.store.pipe(
+      select(getEmail),
+    )
+  }
+
+  public getUserId(): Observable<string> {
+    return this.store.pipe(
+      select(getUserId),
+    )
+  }
 
   public getIsAuth(): Observable<boolean> {
     return this.store.pipe(
@@ -27,15 +37,14 @@ export class AuthFacade {
   }
 
   private getIsAuthFromStorage(): boolean {
-    const authData = this.authService.getAuthData();
-    if (!authData) {
-      return;
-    }
+    // const authData = this.authService.getAuthData();
+    const email = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
+    const expirationDate = localStorage.getItem('expiration');
+    const userId = localStorage.getItem('userId');
 
-    const { email, expirationDate, token, userId} = authData;
     // TODO: move in effect --> this.store.dispatch(getAuthDataFromStorage());
     this.store.dispatch(setAuthDataFromStorage({ userId, token, expirationDate, email }));
     return Boolean(token);
   }
-
 }

@@ -1,0 +1,23 @@
+@import "grid";
+@import "variables";
+
+.overview {
+  @include make-row();
+}
+
+.update,
+.delete {
+  @include make-col-ready();
+  @include make-col(6);
+}
+
+.delete {
+  &__text {
+    align-items: center;
+    display: flex;
+
+    mat-icon {
+      margin-right: $margin-general / 2;
+    }
+  }
+}
