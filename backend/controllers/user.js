@@ -16,13 +16,15 @@ exports.createUser = (req, res, next) => {
       user.save()
         .then(result => {
           res.status(201).json({
-            message: 'User created!',
+            code: responseCodes.REGISTRATION_SUCCESS.code,
+            message: responseCodes.REGISTRATION_SUCCESS.message,
             result
           });
         })
-        .catch(err => {
+        .catch(() => {
           res.status(500).json({
-            message: 'Invalid registration credentials!'
+            code: responseCodes.REGISTRATION_ERROR.code,
+            message: responseCodes.REGISTRATION_ERROR.message
           });
         });
     });

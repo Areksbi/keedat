@@ -7,6 +7,14 @@ module.exports = {
     code: 601,
     message: 'Invalid authentication'
   },
+  REGISTRATION_SUCCESS: {
+    code: 610,
+    message: 'User created!'
+  },
+  REGISTRATION_ERROR: {
+    code: 611,
+    message: 'There was an error on account registration'
+  },
   ACCOUNT_DELETE_SUCCESS: {
     code: 710,
     message: 'Account successfully deleted'

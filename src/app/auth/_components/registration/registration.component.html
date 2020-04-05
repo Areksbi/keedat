@@ -1,25 +1,45 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input matInput type="email" formControlName="email" placeholder="Email" required data-e2e="registration-email"
-           [placeholder]="'auth.registration.email.placeholder' | translate" />
+    <input
+      matInput
+      type="email"
+      formControlName="email"
+      placeholder="Email"
+      required
+      data-e2e="registration-email"
+      [placeholder]="'auth.registration.email.placeholder' | translate"
+    />
     <mat-error *ngIf="registerForm.get('email').invalid">{{ 'auth.registration.email.error' | translate }}</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [type]="hiddenPassword ? 'password' : 'text'" formControlName="password" placeholder="Password"
-           required [placeholder]="'auth.registration.password.placeholder' | translate" data-e2e="registration-password"/>
-    <mat-icon matSuffix (click)="hiddenPassword = !hiddenPassword"
-              *ngIf="(registerForm.get('password').dirty && registerForm.get('password').value) || !hiddenPassword">
-      {{ hiddenPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+    <input
+      matInput
+      [type]="hiddenPassword ? 'password' : 'text'"
+      formControlName="password"
+      placeholder="Password"
+      required
+      [placeholder]="'auth.registration.password.placeholder' | translate"
+      data-e2e="registration-password"
+    />
+    <mat-icon
+      matSuffix
+      (click)="hiddenPassword = !hiddenPassword"
+      *ngIf="(registerForm.get('password').dirty && registerForm.get('password').value) || !hiddenPassword"
+    >
+      {{ hiddenPassword ? 'visibility_off' : 'visibility' }}</mat-icon
+    >
     <mat-error *ngIf="registerForm.get('password').hasError('required')">
-      {{ 'auth.registration.password.error.required' | translate }}</mat-error>
+      {{ 'auth.registration.password.error.required' | translate }}</mat-error
+    >
     <mat-error *ngIf="registerForm.get('password').hasError('minlength')">
-      {{ 'auth.registration.password.error.max-length' | translate }}</mat-error>
+      {{ 'auth.registration.password.error.max-length' | translate }}</mat-error
+    >
   </mat-form-field>
   <div class="registration__consents" data-e2e="registration-privacy">
     <mat-checkbox formControlName="consents">
-      <span>
+      <span data-e2e="registration-privacy-text">
         {{ 'auth.registration.consents.label.before' | translate }}
-        <a [href]="links.PRIVACY_POLICY" target="_blank">
+        <a data-e2e="registration-privacy-link" [href]="links.PRIVACY_POLICY" target="_blank">
           {{ 'auth.registration.consents.link' | translate }}
           <mat-icon matSuffix class="registration__open-in-new">open_in_new</mat-icon>
         </a>
@@ -27,8 +47,16 @@
       </span>
     </mat-checkbox>
     <mat-error *ngIf="(registerForm.get('consents').touched || submitted) && registerForm.get('consents').invalid">
-      {{ 'auth.registration.consents.error' | translate }}</mat-error>
+      {{ 'auth.registration.consents.error' | translate }}</mat-error
+    >
   </div>
-  <button mat-raised-button color="accent" type="submit" data-e2e="registration-submit" [disabled]="isLoading$ | async">
-    {{ 'auth.registration.button' | translate }}</button>
+  <button
+    mat-raised-button
+    color="accent"
+    type="submit"
+    data-e2e="registration-submit"
+    [disabled]="(isLoading$ | async) || registerForm.invalid"
+  >
+    {{ 'auth.registration.button' | translate }}
+  </button>
 </form>
