@@ -51,6 +51,8 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
     "husky": "^4.2.3",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -73,7 +75,11 @@
       "prettier --write",
       "tslint --fix"
     ],
-    "*{.html,.css,.scss,.js,.json}": [
+    "*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*{.html,.css,.scss,.json}": [
       "prettier --write"
     ]
   },
