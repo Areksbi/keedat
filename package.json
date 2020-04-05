@@ -7,11 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "cypress open",
     "start:server": "nodemon server.js",
     "start:qa-client": "ng serve --configuration=qa --port=4202",
     "start:qa-server": "PORT=3001 nodemon server.js",
-    "qa": "concurrently \"npm run start:qa-client\" \"npm run start:qa-server\" \"cypress open\""
+    "qa": "concurrently \"npm run start:qa-client\" \"npm run start:qa-server\" \"npm run e2e\""
   },
   "private": true,
   "dependencies": {
