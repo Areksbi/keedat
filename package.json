@@ -8,7 +8,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start:server": "nodemon server.js"
+    "start:server": "nodemon server.js",
+    "start:cypress-client": "ng serve --port=4202",
+    "start:cypress-server": "PORT=3001 node server.js",
+    "cypress": "concurrently \"npm run start:cypress-client\" \"npm run start:cypress-server\" \"cypress open\""
   },
   "private": true,
   "dependencies": {
@@ -51,6 +54,8 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "concurrently": "^5.1.0",
+    "cypress": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "husky": "^4.2.3",
