@@ -9,6 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SuccessComponent } from './_components/success/success.component';
 
 import { AngularMaterialModule, ErrorInterceptor, HttpClientInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
@@ -29,9 +30,11 @@ import { reducers, metaReducers } from './_store/reducers';
     ErrorComponent,
     FooterComponent,
     HeaderComponent,
+    SuccessComponent
   ],
   entryComponents: [
     ErrorComponent,
+    SuccessComponent
   ],
   imports: [
     AngularMaterialModule,

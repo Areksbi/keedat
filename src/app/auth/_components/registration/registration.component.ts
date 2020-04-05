@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { SuccessComponent } from '../../../_components/success/success.component';
 
 import { AuthService } from '../../_services/auth.service';
 import { links } from '../../../_constants/links.constant';
@@ -12,15 +14,17 @@ import { SpinnerFacades } from '../../../_store/facades';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
   public hiddenPassword = true;
   public isLoading$: Observable<boolean>;
   public links = links;
   public registerForm: FormGroup;
   public submitted = false;
+  private registrationSub: Subscription;
 
   constructor(
     private authService: AuthService,
+    private dialog: MatDialog,
     private spinnerFacade: SpinnerFacades,
   ) {
   }
@@ -51,6 +55,10 @@ export class RegistrationComponent implements OnInit {
     this.isLoading$ = this.spinnerFacade.isLoading();
   }
 
+  public ngOnDestroy(): void {
+    this.registrationSub.unsubscribe();
+  }
+
   public onSubmit(): void {
     this.submitted = true;
 
@@ -58,9 +66,9 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value)
+    this.registrationSub = this.authService.registration(this.f.email.value, this.f.password.value, this.f.consents.value)
       .subscribe((): void => {
-        console.log('Registered');
+        this.dialog.open(SuccessComponent);
       });
   }
 

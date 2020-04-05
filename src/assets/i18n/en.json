@@ -40,6 +40,10 @@
   "error.message.default": "An unknown error occurred!",
   "error.button": "Okay",
 
+  "success.title": "Success!",
+  "success.message.default": "Your operation completed successfully!",
+  "success.button": "Okay",
+
   "faq.title": "Frequent Asked Questions",
 
   "nav.faq": "FAQ",

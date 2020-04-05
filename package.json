@@ -14,6 +14,18 @@
     "qa": "concurrently \"npm run start:qa-client\" \"npm run start:qa-server\" \"npm run e2e\""
   },
   "private": true,
+  "keywords": [
+    "keedat",
+    "mean",
+    "mongodb",
+    "monogoose",
+    "express",
+    "angular",
+    "rxjs",
+    "ngrx",
+    "node",
+    "cypress"
+  ],
   "dependencies": {
     "@angular/animations": "~8.2.14",
     "@angular/cdk": "~8.2.3",
@@ -90,7 +102,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": ""
     }
   }
 }
