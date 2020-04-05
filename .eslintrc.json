@@ -12,6 +12,8 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  "rules": {},
+  "rules": {
+    "max-len": ["error", { "code": 140 }]
+  },
   "ignorePatterns": ["dist", "node_modules", "src"]
 }
