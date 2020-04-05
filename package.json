@@ -92,7 +92,7 @@
       "prettier --write",
       "tslint --fix"
     ],
-    "*.js": [
+    "!(*spec).js": [
       "prettier --write",
       "eslint --fix"
     ],
