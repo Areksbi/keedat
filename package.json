@@ -96,7 +96,7 @@
       "prettier --write",
       "eslint --fix"
     ],
-    "*{.html,.css,.scss,.json}": [
+    "*{.html,.css,.scss,.json,.spec.js}": [
       "prettier --write"
     ]
   },
