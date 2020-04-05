@@ -26,7 +26,7 @@
     ],
     "no-conflicting-lifecycle": true,
     "no-consecutive-blank-lines": false,
-    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-console": [true, "log", "debug", "info", "time", "timeEnd", "trace"],
     "no-debugger": true,
     "no-empty": false,
     "no-host-metadata-property": true,
