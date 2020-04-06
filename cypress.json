@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:4202",
   "email": "test-0@test.com",
-  "password": "password"
+  "password": "password",
+  "userId": "5e8a5d68161492f0d77b0469"
 }
