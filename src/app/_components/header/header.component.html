@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
-  <h1><a [routerLink]="links.HOME">{{ 'home.title' | translate }}</a></h1>
+  <h1>
+    <a [routerLink]="links.HOME">{{ 'home.title' | translate }}</a>
+  </h1>
   <span class="spacer"></span>
   <ul>
     <li *ngIf="userIsAuthenticated$ | async">
       <a mat-button [routerLink]="links.ACCOUNT">Account</a>
     </li>
-    <li *ngIf="userIsAuthenticated$ | async">
+    <li *ngIf="userIsAuthenticated$ | async" data-e2e="header-logout">
       <button mat-button (click)="onLogout()">Logout</button>
     </li>
   </ul>
