@@ -4,7 +4,7 @@
   </h1>
   <span class="spacer"></span>
   <ul>
-    <li *ngIf="userIsAuthenticated$ | async">
+    <li *ngIf="userIsAuthenticated$ | async" data-e2e="header-account">
       <a mat-button [routerLink]="links.ACCOUNT">Account</a>
     </li>
     <li *ngIf="userIsAuthenticated$ | async" data-e2e="header-logout">
