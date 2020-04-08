@@ -15,6 +15,7 @@
           [readonly]="!isAccountUpdating"
           formControlName="email"
           [placeholder]="'account.data.email.placeholder' | translate"
+          data-e2e="update-email"
         />
         <mat-error *ngIf="updateForm.get('email').invalid">{{ 'account.data.email.error' | translate }}</mat-error>
       </mat-form-field>
@@ -27,6 +28,7 @@
           [disabled]="!isAccountUpdating"
           [readonly]="!isAccountUpdating"
           [placeholder]="'account.data.password.placeholder' | translate"
+          data-e2e="update-password"
         />
         <mat-icon
           matSuffix
@@ -46,6 +48,7 @@
           [disabled]="!isAccountUpdating"
           [readonly]="!isAccountUpdating"
           [placeholder]="'account.data.password.placeholder.new' | translate"
+          data-e2e="update-new-password"
         />
         <mat-icon
           matSuffix
@@ -57,7 +60,14 @@
         <mat-error *ngIf="updateForm.get('newPassword').invalid">{{ 'account.data.password.error.new' | translate }}</mat-error>
       </mat-form-field>
 
-      <button *ngIf="!isAccountUpdating" mat-raised-button type="submit" [disabled]="isLoading$ | async" (click)="isAccountUpdating = true">
+      <button
+        *ngIf="!isAccountUpdating"
+        mat-raised-button
+        type="submit"
+        [disabled]="isLoading$ | async"
+        (click)="isAccountUpdating = true"
+        data-e2e="enable-update"
+      >
         {{ 'account.data.update.button.enable' | translate }}
       </button>
       <button
@@ -67,6 +77,7 @@
         type="submit"
         [disabled]="isLoading$ | async"
         (click)="updateAccount()"
+        data-e2e="update-account"
       >
         {{ 'account.data.update.button.submit' | translate }}
       </button>
