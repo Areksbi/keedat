@@ -1,59 +1,61 @@
 describe('Registration', () => {
+  let form
+
+  before(() => {
+    cy.getFormData().then(formData => {
+      form = formData
+    })
+  })
+
   beforeEach(() => {
     cy.server()
     cy.route('POST', '**/registration').as('registration')
   })
 
   it('should register user with valid emails', () => {
-    cy.getFormData().then(form => {
-      form.validEmails.forEach(validEmail => {
-        cy.visit('/')
+    form.validEmails.forEach(validEmail => {
+      cy.visit('/')
 
-        cy.get('[data-e2e="registration-email"]').type(validEmail.replace('{{uniqueId}}', form.uniqueId))
-        cy.get('[data-e2e="registration-password"]').type('password')
-        cy.get('[data-e2e="registration-privacy"] label').click()
-        cy.get('[data-e2e="registration-submit"]').click()
+      cy.get('[data-e2e="registration-email"]').type(validEmail.replace('{{uniqueId}}', form.uniqueId))
+      cy.get('[data-e2e="registration-password"]').type('password')
+      cy.get('[data-e2e="registration-privacy"] label').click()
+      cy.get('[data-e2e="registration-submit"]').click()
 
-        cy.wait('@registration')
+      cy.wait('@registration')
 
-        cy.get('[data-e2e="success-title"]').contains('Success!')
-        cy.get('[data-e2e="success-button"]').click()
-        cy.get('[data-e2e="success-title"]').should('not.exist')
-      })
+      cy.get('[data-e2e="success-title"]').contains('Success!')
+      cy.get('[data-e2e="success-button"]').click()
+      cy.get('[data-e2e="success-title"]').should('not.exist')
     })
   })
 
   it('should NOT register user with invalid emails', () => {
-    cy.getFormData().then(form => {
-      form.invalidEmails.forEach(validEmail => {
-        cy.visit('/')
+    form.invalidEmails.forEach(validEmail => {
+      cy.visit('/')
 
-        cy.get('[data-e2e="registration-email"]').type(validEmail.replace('{{uniqueId}}', form.uniqueId))
-        cy.get('[data-e2e="registration-password"]').type('password')
-        cy.get('[data-e2e="registration-privacy"] label').click()
-        cy.get('[data-e2e="registration-submit"]').should('be.disabled')
+      cy.get('[data-e2e="registration-email"]').type(validEmail.replace('{{uniqueId}}', form.uniqueId))
+      cy.get('[data-e2e="registration-password"]').type('password')
+      cy.get('[data-e2e="registration-privacy"] label').click()
+      cy.get('[data-e2e="registration-submit"]').should('be.disabled')
 
-        cy.get('mat-error').contains('Enter a valid email')
-      })
+      cy.get('mat-error').contains('Enter a valid email')
     })
   })
 
   it('should register user with valid passwords', () => {
-    cy.getFormData().then(form => {
-      form.validPasswords.forEach((validPassword, index) => {
-        cy.visit('/')
+    form.validPasswords.forEach((validPassword, index) => {
+      cy.visit('/')
 
-        cy.get('[data-e2e="registration-email"]').type(`test-${form.uniqueId}${index}@test.com`)
-        cy.get('[data-e2e="registration-password"]').type(validPassword)
-        cy.get('[data-e2e="registration-privacy"] label').click()
-        cy.get('[data-e2e="registration-submit"]').click()
+      cy.get('[data-e2e="registration-email"]').type(`test-${form.uniqueId}${index}@test.com`)
+      cy.get('[data-e2e="registration-password"]').type(validPassword)
+      cy.get('[data-e2e="registration-privacy"] label').click()
+      cy.get('[data-e2e="registration-submit"]').click()
 
-        cy.wait('@registration')
+      cy.wait('@registration')
 
-        cy.get('[data-e2e="success-title"]').contains('Success!')
-        cy.get('[data-e2e="success-button"]').click()
-        cy.get('[data-e2e="success-title"]').should('not.exist')
-      })
+      cy.get('[data-e2e="success-title"]').contains('Success!')
+      cy.get('[data-e2e="success-button"]').click()
+      cy.get('[data-e2e="success-title"]').should('not.exist')
     })
   })
 

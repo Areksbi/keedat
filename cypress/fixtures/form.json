@@ -1,4 +1,5 @@
 {
+  "email": "test@test.com",
   "invalidEmails": [
     "Abc.example.com",
     "A@b@c@example.com",
@@ -8,6 +9,7 @@
     "this\\ still\"not\\allowed@example.com",
     "1234567890123456789012345678901234567890123456789012345678901234+x@example.com"
   ],
+  "password": "password",
   "validEmails": [
     "simple-{{uniqueId}}@example.com",
     "very.common-{{uniqueId}}@example.com",
@@ -28,5 +30,6 @@
     "Password123",
     "Password[`~!@#$%^&*()_|+\\-=?;:'\",.<>\\{\\}\\[\\]\\\\\\/]123",
     "Password[`~!@#$%^&*()_|+\\-=?;:'\",.<>\\{\\}\\[\\]\\\\\\/]123ùàçà§"
-  ]
+  ],
+  "userId": "5e930e226fe32c5093a60436"
 }

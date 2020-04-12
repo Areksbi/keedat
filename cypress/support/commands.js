@@ -1,4 +1,4 @@
-Cypress.Commands.add('register', (email, password) => {
+Cypress.Commands.add('basicRegister', (email, password) => {
   cy.server()
   cy.route('POST', '**/registration').as('registration')
 
@@ -10,6 +10,14 @@ Cypress.Commands.add('register', (email, password) => {
   cy.get('[data-e2e="registration-submit"]').click()
 
   cy.wait('@registration')
+})
+
+Cypress.Commands.add('register', (email, password) => {
+  cy.basicRegister(email, password)
+
+  cy.get('[data-e2e="success-title"]').contains('Success!')
+  cy.get('[data-e2e="success-button"]').click()
+  cy.get('[data-e2e="success-title"]').should('not.exist')
 })
 
 Cypress.Commands.add('login', (email, password) => {
@@ -35,3 +43,7 @@ Cypress.Commands.add('getRandomIntInclusive', (min = 0, max = 99999999) => {
 Cypress.Commands.add('getFormData', () =>
   cy.getRandomIntInclusive().then(uniqueId => cy.fixture('form').then(form => ({ uniqueId, ...form })))
 )
+
+Cypress.Commands.add('getSessionStorage', key => {
+  cy.window().then(window => window.sessionStorage.getItem(key))
+})
