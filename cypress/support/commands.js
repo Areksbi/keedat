@@ -1,15 +1,3 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
 Cypress.Commands.add('register', (email, password) => {
   cy.server()
   cy.route('POST', '**/registration').as('registration')
@@ -23,6 +11,7 @@ Cypress.Commands.add('register', (email, password) => {
 
   cy.wait('@registration')
 })
+
 Cypress.Commands.add('login', (email, password) => {
   cy.server()
   cy.route('POST', '**/login').as('login')
@@ -36,15 +25,13 @@ Cypress.Commands.add('login', (email, password) => {
 
   cy.wait('@login')
 })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getRandomIntInclusive', (min = 0, max = 99999999) => {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min
+})
+
+Cypress.Commands.add('getFormData', () =>
+  cy.getRandomIntInclusive().then(uniqueId => cy.fixture('form').then(form => ({ uniqueId, ...form })))
+)
