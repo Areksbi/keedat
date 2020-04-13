@@ -1,23 +1,22 @@
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
-let uniqueId = getRandomIntInclusive(0, 99999999)
-let email = `${uniqueId}-${Cypress.config('email')}`
-const password = 'password'
-
 describe('Login', () => {
+  let email
+  let form
+  let password
+  let uniqueId
+
   beforeEach(() => {
+    cy.getFormData().then(formData => {
+      form = formData
+      uniqueId = form.uniqueId
+      email = `${uniqueId}-${form.email}`
+      password = form.password
+    })
+
     cy.server()
     cy.route('PUT', `**/update/*`).as('update')
-
-    uniqueId = getRandomIntInclusive(0, 99999999)
-    email = `${uniqueId}-${Cypress.config('email')}`
   })
 
-  it('should update user email', () => {
+  it.only('should update user email', () => {
     cy.register(email, password)
     cy.login(email, password)
 
