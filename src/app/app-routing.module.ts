@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from './auth/_helpers/auth.guard';
+import { AuthGuard } from './_modules/auth/_helpers/auth.guard';
 import { urls } from './_constants/urls.constant';
 
 const routes: Routes = [
@@ -15,20 +15,20 @@ const routes: Routes = [
       },
       {
         path: urls.ACCOUNT,
-        loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
+        loadChildren: () => import('./_modules/account/account.module').then(m => m.AccountModule),
         canActivate: [AuthGuard]
       },
       {
         path: urls.FAQ,
-        loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule),
+        loadChildren: () => import('./_modules/faq/faq.module').then(m => m.FaqModule),
       },
       {
         path: urls.HOME,
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+        loadChildren: () => import('./_modules/home/home.module').then(m => m.HomeModule),
       },
       {
         path: urls.LEGAL,
-        loadChildren: () => import('./legal/legal.module').then(m => m.LegalModule),
+        loadChildren: () => import('./_modules/legal/legal.module').then(m => m.LegalModule),
       },
       {
         path: '**',

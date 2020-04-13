@@ -1,6 +1,6 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 
-import { authReducers, AuthStateInterface } from '../../auth/_store/reducers/auth.reducers';
+import { authReducers, AuthStateInterface } from '../../_modules/auth/_store/reducers/auth.reducers';
 import { environment } from '../../../environments/environment';
 import { spinnerReducers, SpinnerStateInterface } from './spinner.reducers';
 

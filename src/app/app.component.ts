@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 import defaultLanguage from './../assets/i18n/en.json';
-import { AuthFacade } from './auth/_store/facades/auth.facades';
-import { AuthService } from './auth/_services/auth.service';
+import { AuthFacade } from './_modules/auth/_store/facades/auth.facades';
+import { AuthService } from './_modules/auth/_services/auth.service';
 import { SpinnerFacades } from './_store/facades';
 
 @Component({

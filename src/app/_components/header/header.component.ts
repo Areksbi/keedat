@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { links } from '../../_constants/links.constant';
-import { AuthService } from '../../auth/_services/auth.service';
-import { AuthFacade } from '../../auth/_store/facades/auth.facades';
+import { AuthService } from '../../_modules/auth/_services/auth.service';
+import { AuthFacade } from '../../_modules/auth/_store/facades/auth.facades';
 
 @Component({
   selector: 'app-header',

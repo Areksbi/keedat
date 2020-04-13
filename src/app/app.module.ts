@@ -15,8 +15,8 @@ import { AngularMaterialModule, ErrorInterceptor, HttpClientInterceptor } from '
 import { AppComponent } from './app.component';
 import { AppEffects } from './_store/effects/app.effects';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './auth/auth.module';
-import { AuthInterceptor } from './auth/_helpers/auth.interceptor';
+import { AuthModule } from './_modules/auth/auth.module';
+import { AuthInterceptor } from './_modules/auth/_helpers/auth.interceptor';
 import { environment } from '../environments/environment';
 import { ErrorComponent, FooterComponent, HeaderComponent } from './_components';
 import { reducers, metaReducers } from './_store/reducers';
