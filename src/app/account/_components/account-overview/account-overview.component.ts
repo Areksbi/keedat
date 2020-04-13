@@ -54,7 +54,6 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.onDestroy$.next();
-    this.onDestroy$.unsubscribe();
   }
 
   public deleteAccount(): void {
