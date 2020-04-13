@@ -75,7 +75,7 @@
         mat-raised-button
         color="accent"
         type="submit"
-        [disabled]="isLoading$ | async"
+        [disabled]="(isLoading$ | async) || updateForm.invalid"
         (click)="updateAccount()"
         data-e2e="update-account"
       >
