@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ReCaptchaV3Service } from 'ng-recaptcha';
@@ -22,18 +22,7 @@ export class HttpClientInterceptor implements HttpInterceptor {
     const action = req.url.replace(/^.*\/\/[^\/]+/, '');
     return this.recaptchaV3Service.execute(action).pipe(
       first(Boolean),
-      concatMap(
-        (token: string): Observable<any> => {
-          const reqCloned = this.addRecaptchaToken(req, token);
-          return this.encryptionService.encrypt(JSON.stringify(reqCloned.body)).pipe(
-            map(encryptedTex =>
-              reqCloned.clone({
-                body: encryptedTex,
-              })
-            )
-          );
-        }
-      ),
+      concatMap((token: string): Observable<any> => this.getRequestEncryption(this.addRecaptchaToken(req, token))),
       concatMap(reqClonedAndEncrypted => next.handle(reqClonedAndEncrypted).pipe(finalize(() => this.spinnerFacade.hideSpinner())))
     );
   }
@@ -62,6 +51,29 @@ export class HttpClientInterceptor implements HttpInterceptor {
 
       default:
         return req;
+    }
+  }
+
+  private getRequestEncryption(reqCloned: HttpRequest<any>): Observable<HttpRequest<any>> {
+    switch (reqCloned.method.toLowerCase()) {
+      case 'delete':
+      case 'get':
+        const paramsAsBodyString = new URL(reqCloned.urlWithParams).search;
+        return this.encryptionService.encrypt(paramsAsBodyString).pipe(
+          map((encryptedParams: string) =>
+            reqCloned.clone({
+              params: new HttpParams().set('q', encryptedParams),
+            })
+          )
+        );
+      default:
+        return this.encryptionService.encrypt(JSON.stringify(reqCloned.body)).pipe(
+          map(encryptedBody =>
+            reqCloned.clone({
+              body: encryptedBody,
+            })
+          )
+        );
     }
   }
 }
