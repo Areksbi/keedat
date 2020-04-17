@@ -70,7 +70,9 @@ export class HttpClientInterceptor implements HttpInterceptor {
         return this.encryptionService.encrypt(JSON.stringify(reqCloned.body)).pipe(
           map(encryptedBody =>
             reqCloned.clone({
-              body: encryptedBody,
+              body: {
+                body: encryptedBody,
+              },
             })
           )
         );
