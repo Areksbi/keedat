@@ -1,15 +1,17 @@
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
+describe('Delete', () => {
+  let email
+  let form
+  let password
+  let uniqueId
 
-const uniqueId = getRandomIntInclusive(0, 99999999)
-const email = `${uniqueId}-${Cypress.config('email')}`
-const password = 'password'
-
-describe('Login', () => {
   beforeEach(() => {
+    cy.getFormData().then(formData => {
+      form = formData
+      uniqueId = form.uniqueId
+      email = `${uniqueId}-${form.email}`
+      password = form.password
+    })
+
     cy.server()
     cy.route('DELETE', `**/delete/*`).as('delete')
   })

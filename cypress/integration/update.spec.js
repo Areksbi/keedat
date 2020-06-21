@@ -1,4 +1,4 @@
-describe('Login', () => {
+describe('Update', () => {
   let email
   let form
   let password

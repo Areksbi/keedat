@@ -19,7 +19,7 @@ export class EncryptionService {
   };
 
   encrypt(text: string): Observable<ObservedValueOf<Promise<string>>> {
-    const publicKeyArrayBuffer: ArrayBufferLike = this.base64StringToArrayBuffer(environment.requestEncryptionKey);
+    const publicKeyArrayBuffer: ArrayBufferLike = this.pemToArrayBuffer(environment.requestEncryptionKey);
     const encodedText: Uint8Array = new TextEncoder().encode(text);
 
     return from(
@@ -64,6 +64,46 @@ export class EncryptionService {
     );
   }
 
+  // decrypt(text) {
+  //   // const privateKeyArrayBuffer = this.base64StringToArrayBuffer(process.env.REQUEST_DECRYPTION_KEY);
+  //   const privateKeyArrayBuffer = this.pemToArrayBuffer(environment.requestDecryptionKey);
+  //   console.log('pippo: ', text)
+  //   const data = this.base64StringToArrayBuffer(text);
+  //   console.log('base64: ', data)
+  //   return this.rsaDecrypt(data, privateKeyArrayBuffer)
+  //     .then((data) => {
+  //       console.log('paperino: ', data)
+  //       return new TextDecoder().decode(data);
+  //     })
+  //     // .catch(error => console.log('Error in catch pippo: ' + error))
+  // }
+  //
+  // public rsaDecrypt (data, rsaPrivateKeyBuffer) {
+  //   const aesIVLength: number = this.aesIVLength;
+  //   const aesAlgorithm = this.aesAlgorithm;
+  //   const rsaAlgorithm = this.rsaAlgorithm;
+  //
+  //   return crypto.subtle.importKey("pkcs8", rsaPrivateKeyBuffer, rsaAlgorithm,
+  //     /* extractable: */ false, /* keyUsages: */ ["unwrapKey"])
+  //     // .catch(function (error) { throw "Error importing private key."; })
+  //     .then(function (rsaKey) {
+  //       var wrappedAesKeyLength = rsaAlgorithm.modulusLength / 8;
+  //       var wrappedAesKey = new Uint8Array(data.slice(0, wrappedAesKeyLength));
+  //       var aesIV = new Uint8Array(data.slice(wrappedAesKeyLength, wrappedAesKeyLength + aesIVLength));
+  //       var initializedaesAlgorithm = Object.assign({ iv: aesIV }, aesAlgorithm);
+  //
+  //       return crypto.subtle.unwrapKey("raw", wrappedAesKey, rsaKey, rsaAlgorithm, initializedaesAlgorithm,
+  //         /* extractable: */ false, /* keyUsages: */ ["decrypt"])
+  //         // .catch(function (error) { throw "Error decrypting symmetric key." })
+  //         .then (function (aesKey) {
+  //           var encryptedData = new Uint8Array(data.slice(wrappedAesKeyLength + aesIVLength));
+  //
+  //           return crypto.subtle.decrypt(initializedaesAlgorithm, aesKey, encryptedData)
+  //             // .catch(function (error) { throw "Error decrypting data." });
+  //         });
+  //     });
+  // };
+
   private base64StringToArrayBuffer(value): ArrayBufferLike {
     const byteString: string = atob(value);
     const byteArray: Uint8Array = new Uint8Array(byteString.length);
@@ -85,4 +125,37 @@ export class EncryptionService {
 
     return btoa(byteString);
   }
+
+
+  pemToBase64String(value) {
+    var lines = value.split("\n");
+    var base64String = "";
+
+    for (var i = 0; i < lines.length; i++) {
+      if (lines[i].startsWith("-----")) continue;
+      base64String += lines[i];
+    }
+
+    return base64String;
+  }
+
+  base64StringToPem(value, label) {
+    var pem = "-----BEGIN {0}-----\n".replace("{0}", label);
+
+    for (var i = 0; i < value.length; i += 64) {
+      pem += value.substr(i, 64) + "\n";
+    }
+
+    pem += "-----END {0}-----\n".replace("{0}", label);
+
+    return pem;
+  }
+
+  pemToArrayBuffer(value) {
+    return this.base64StringToArrayBuffer(this.pemToBase64String(value));
+  };
+
+  arrayBufferToPem(value, label) {
+    return this.base64StringToPem(this.arrayBufferToBase64String(value), label);
+  };
 }

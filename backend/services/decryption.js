@@ -1,3 +1,6 @@
+const { Crypto } = require("@peculiar/webcrypto");
+
+const crypto = new Crypto();
 const EncryptionHelpers = require('./encoding-helpers');
 
 /**
@@ -11,7 +14,7 @@ module.exports = class DecryptionService extends EncryptionHelpers {
    * @return {Promise<string>} The promise of the decrypted text
    */
   decrypt(text) {
-    const privateKeyArrayBuffer = this.base64StringToArrayBuffer(process.env.REQUEST_DECRYPTION_KEY);
+    const privateKeyArrayBuffer = this.pemToArrayBuffer(process.env.REQUEST_DECRYPTION_KEY);
     const data = this.base64StringToArrayBuffer(text);
 
     return this.rsaDecrypt(data, privateKeyArrayBuffer).then((data) => new TextDecoder().decode(data));

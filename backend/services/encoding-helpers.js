@@ -1,3 +1,7 @@
+const atob = require('atob');
+const btoa = require('btoa');
+
+
 module.exports = class EncryptionHelpers {
   /**
    * @constructs
@@ -46,4 +50,37 @@ module.exports = class EncryptionHelpers {
 
     return btoa(byteString);
   }
+
+  pemToBase64String(value) {
+    var lines = value.split("\n");
+    var base64String = "";
+
+    for (var i = 0; i < lines.length; i++) {
+      if (lines[i].startsWith("-----")) continue;
+      base64String += lines[i];
+    }
+
+    return base64String;
+  }
+
+  base64StringToPem(value, label) {
+    var pem = "-----BEGIN {0}-----\n".replace("{0}", label);
+
+    for (var i = 0; i < value.length; i += 64) {
+      pem += value.substr(i, 64) + "\n";
+    }
+
+    pem += "-----END {0}-----\n".replace("{0}", label);
+
+    return pem;
+  }
+
+  pemToArrayBuffer(value) {
+    return this.base64StringToArrayBuffer(this.pemToBase64String(value));
+  };
+
+  arrayBufferToPem(value, label) {
+    return this.base64StringToPem(this.arrayBufferToBase64String(value), label);
+  };
+
 };

@@ -1,8 +1,11 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const Encryption = require('../services/encryption')
 const responseCodes = require('../constants/response-codes.constant');
 const User = require('../models/user');
+
+const encryption = new Encryption();
 
 exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
@@ -15,18 +18,22 @@ exports.createUser = (req, res, next) => {
       });
       user.save()
         .then(result => {
-          res.status(201).json({
-            code: responseCodes.REGISTRATION_SUCCESS.code,
-            message: responseCodes.REGISTRATION_SUCCESS.message,
-            result
-          });
+          encryption.encrypt(result)
+            .then(response => {
+              res.status(201).json({
+                code: responseCodes.REGISTRATION_SUCCESS.code,
+                message: responseCodes.REGISTRATION_SUCCESS.message,
+                response
+              });
+              next()
+            })
         })
-        .catch(() => {
-          res.status(500).json({
-            code: responseCodes.REGISTRATION_ERROR.code,
-            message: responseCodes.REGISTRATION_ERROR.message
-          });
+      .catch(() => {
+        res.status(500).json({
+          code: responseCodes.REGISTRATION_ERROR.code,
+          message: responseCodes.REGISTRATION_ERROR.message
         });
+      });
     });
 };
 
