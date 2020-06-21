@@ -1,5 +1,5 @@
-const responseCodes = require('../constants/response-codes.constant');
 const fetch = require('node-fetch');
+const responseCodes = require('../constants/response-codes.constant');
 
 module.exports = (req, res, next) => {
   const url = new URL(`https://www.google.com/recaptcha/api/siteverify`);

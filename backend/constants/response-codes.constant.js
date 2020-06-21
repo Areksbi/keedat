@@ -15,6 +15,10 @@ module.exports = {
     code: 611,
     message: 'There was an error on account registration'
   },
+  REGISTRATION_HASHING_ERROR: {
+    code: 612,
+    message: 'There was an error on account registration'
+  },
   ACCOUNT_DELETE_SUCCESS: {
     code: 710,
     message: 'Account successfully deleted'
@@ -51,4 +55,8 @@ module.exports = {
     code: 725,
     message: 'Your password is incorrect'
   },
+  DECRYPTION_ERROR: {
+    code: 800,
+    message: 'There was an unexpected error'
+  }
 };
