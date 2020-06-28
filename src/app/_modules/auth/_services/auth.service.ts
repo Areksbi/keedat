@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { first, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { environment } from '../../../../environments/environment';
 import { links } from '../../../_constants/links.constant';
+import { ResponseBaseInterface } from '../../../_interfaces/base.interface';
 import { logout } from '../_store/actions/auth.actions';
 import {
   RequestLoginInterface,
@@ -56,8 +57,9 @@ export class AuthService {
   }
 
   public login(request: RequestLoginInterface): Observable<ResponseLoginInterface>  {
-    return this.http.post<ResponseLoginInterface>(`${BACKEND_URL}login`, request)
+    return this.http.post<ResponseBaseInterface<ResponseLoginInterface>>(`${BACKEND_URL}login`, request)
       .pipe(
+        map((response: ResponseBaseInterface<ResponseLoginInterface>) => response.response),
         first((response: ResponseLoginInterface) => !!response.token),
         tap((response: ResponseLoginInterface) => {
           const token = response.token;

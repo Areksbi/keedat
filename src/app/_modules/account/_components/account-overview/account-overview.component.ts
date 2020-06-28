@@ -9,7 +9,7 @@ import { State } from '../../../../_store/reducers';
 import { AuthService } from '../../../auth/_services/auth.service';
 import { requestUpdateUser } from '../../../auth/_store/actions/auth.actions';
 import { AuthFacade } from '../../../auth/_store/facades/auth.facades';
-import { RequestUpdateAccount } from '../../_interfaces/account.interface';
+import { RequestResponseUpdateAccount } from '../../_interfaces/account.interface';
 import { AccountService } from '../../_services/account.service';
 
 @Component({
@@ -91,7 +91,7 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
             (password.value && newPassword.value && password.value !== newPassword.value)
         ),
         concatMap(([email, emailControl, password, newPassword]) => {
-          const body: RequestUpdateAccount = {
+          const body: RequestResponseUpdateAccount = {
             email: (emailControl.value !== email && emailControl.value) || null,
             password: password.value || null,
             newPassword: newPassword.value || null,

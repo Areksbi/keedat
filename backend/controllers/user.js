@@ -43,18 +43,22 @@ exports.userLogin = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
-        return res.status(401).json({
-          message: 'Auth failed'
-        });
+        res.locals.response = {
+          status: 401,
+          codeObject: responseCodes.LOGIN_NO_USER_ERROR
+        }
+        next()
       }
       fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
       if (!result) {
-        return res.status(401).json({
-          message: 'Auth failed'
-        });
+        res.locals.response = {
+          status: 401,
+          codeObject: responseCodes.LOGIN_INVALID_PASSWORD_ERROR
+        }
+        next()
       }
       const token = jwt.sign(
         {
@@ -66,17 +70,26 @@ exports.userLogin = (req, res, next) => {
           expiresIn: '1h'
         }
       );
-      res.status(200).json({
-        email: fetchedUser.email,
-        expiresIn: 3600,
-        token,
-        userId: fetchedUser._id
-      });
+      res.locals.response = {
+        status: 200,
+        codeObject: responseCodes.LOGIN_SUCCESS,
+        response: {
+          email: fetchedUser.email,
+          expiresIn: 3600,
+          token,
+          userId: fetchedUser._id
+        }
+      }
+      next()
     })
-    .catch(err =>
-      res.status(401).json({
-        message: 'Invalid authentication credentials!'
-      }));
+    .catch(err => {
+      console.error(err)
+      res.locals.response = {
+        status: 401,
+        codeObject: responseCodes.LOGIN_INVALID_ERROR,
+      }
+      next()
+    });
 };
 
 exports.userUpdate = async (req, res, next) => {

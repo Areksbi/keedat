@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/registration', errorsLogger, decryption, checkRecaptcha, UserController.createUser, encryption);
 
-router.post('/login', errorsLogger, decryption, checkRecaptcha, UserController.userLogin/*, encryption*/);
+router.post('/login', errorsLogger, decryption, checkRecaptcha, UserController.userLogin, encryption);
 
 router.put('/update/:id', errorsLogger, decryption, checkRecaptcha, UserController.userUpdate/*, encryption*/);
 

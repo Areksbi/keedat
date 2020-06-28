@@ -4,7 +4,7 @@ describe('Login', () => {
   before(() => {
     cy.getFormData().then(formData => {
       form = formData
-      cy.basicRegister(form.email, form.password)
+      // cy.basicRegister(form.email, form.password)
     })
   })
 
@@ -24,14 +24,16 @@ describe('Login', () => {
     cy.wait('@login').then(() => {
       cy.get('[data-e2e="header-logout"]').contains('Logout')
 
-      expect(localStorage.getItem('email')).to.eq(form.email)
-      expect(localStorage.getItem('token')).to.have.lengthOf(208)
-
-      const getHours = date => Math.abs(new Date(date).getTime() - new Date().getTime()) / 3600000
-      expect(Math.abs(getHours(localStorage.getItem('expiration'))))
-        .to.be.greaterThan(0.999)
-        .to.be.lessThan(1)
-      expect(localStorage.getItem('userId')).to.eq(form.userId)
+      cy.wait(0).then(() => {
+        const getHours = date => Math.abs(new Date(date).getTime() - new Date().getTime()) / 3600000
+        console.log(localStorage.getItem('expiration'))
+        expect(getHours(localStorage.getItem('expiration')))
+          .to.be.greaterThan(0.999)
+          .to.be.lessThan(1)
+        expect(localStorage.getItem('email')).to.eq(form.email)
+        expect(localStorage.getItem('token')).to.have.lengthOf(208)
+        expect(localStorage.getItem('userId')).to.eq(form.userId)
+      })
     })
   })
 
@@ -42,7 +44,7 @@ describe('Login', () => {
 
     cy.wait('@login')
 
-    cy.get('[data-e2e="error-text"]').contains('Auth failed')
+    cy.get('[data-e2e="error-text"]').contains('Invalid authentication credentials!')
     cy.get('[data-e2e="error-button"]').click()
     cy.get('[data-e2e="error-text"]').should('not.exist')
   })
@@ -54,7 +56,7 @@ describe('Login', () => {
 
     cy.wait('@login')
 
-    cy.get('[data-e2e="error-text"]').contains('Auth failed')
+    cy.get('[data-e2e="error-text"]').contains('Invalid authentication credentials!')
     cy.get('[data-e2e="error-button"]').click()
     cy.get('[data-e2e="error-text"]').should('not.exist')
   })

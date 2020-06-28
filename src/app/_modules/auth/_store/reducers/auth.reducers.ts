@@ -6,7 +6,7 @@ import {
   responseUpdateUserSuccess,
   setAuthDataFromStorage,
 } from '../actions/auth.actions';
-import { ResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
+import { RequestResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
 
 
 export const authFeatureKey = 'auth';
@@ -36,8 +36,8 @@ const _authReducers = createReducer(
   on(setAuthDataFromStorage, (state: AuthStateInterface, { email, expirationDate, token, userId }) =>
     ({ ...state, email, expirationDate, token, userId })),
   on(logout, (() => initialState)),
-  on(responseUpdateUserSuccess, (state: AuthStateInterface, response: ResponseUpdateAccount) => {
-    return ({...state, email: response.result.email || state.email });
+  on(responseUpdateUserSuccess, (state: AuthStateInterface, response: RequestResponseUpdateAccount) => {
+    return ({...state, email: response.email || state.email });
   })
 );
 

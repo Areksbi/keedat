@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
   const response = res.locals.response
 
   if (response.response) {
-    encryption.encrypt(response.response)
+    encryption.encrypt(JSON.stringify(response.response))
       .then(result => {
         res.status(response.status).json({
           code: response.codeObject.code,

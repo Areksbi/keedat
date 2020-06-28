@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { RequestUpdateAccount } from '../_interfaces/account.interface';
+import { RequestResponseUpdateAccount } from '../_interfaces/account.interface';
 
 
 const BACKEND_URL = `${environment.api}/user/`;
@@ -20,7 +20,7 @@ export class AccountService {
     return this.http.delete(`${BACKEND_URL}delete/${id}`);
   }
 
-  public updateAccount(id: string, body: RequestUpdateAccount) {
+  public updateAccount(id: string, body: RequestResponseUpdateAccount) {
     return this.http.put(`${BACKEND_URL}update/${id}`, body);
   }
 }

@@ -27,15 +27,15 @@ module.exports = (req, res, next) => {
         next();
       } else {
         res.status(500).json({
-          code: responseCodes.LOGIN_RECAPTCHA_INVALID.code,
-          message: responseCodes.LOGIN_RECAPTCHA_INVALID.message
+          code: responseCodes.RECAPTCHA_INVALID.code,
+          message: responseCodes.RECAPTCHA_INVALID.message
         });
       }
     })
     .catch(() => {
       res.status(500).json({
-        code: responseCodes.LOGIN_RECAPTCHA_POST_ERROR.code,
-        message: responseCodes.LOGIN_RECAPTCHA_POST_ERROR.message
+        code: responseCodes.RECAPTCHA_POST_ERROR.code,
+        message: responseCodes.RECAPTCHA_POST_ERROR.message
       });
     });
 };

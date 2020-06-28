@@ -3,7 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { AuthStateInterface } from '../reducers/auth.reducers';
 import { RequestLoginActionInterface } from '../../_interfaces/auth-actions.interface';
 import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
-import { RequestUpdateAccount, ResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
+import { RequestResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
 
 export const requestLogin = createAction(
   '[Auth] Login Request',
@@ -34,12 +34,12 @@ export const logout = createAction(
 
 export const requestUpdateUser = createAction(
   '[User] Update User Request',
-  props<{id: string, body: RequestUpdateAccount}>()
+  props<{id: string, body: RequestResponseUpdateAccount}>()
 );
 
 export const responseUpdateUserSuccess = createAction(
   '[User] Update User Response Success',
-  props<ResponseUpdateAccount>()
+  props<RequestResponseUpdateAccount>()
 );
 
 export const responseUpdateUserError = createAction(

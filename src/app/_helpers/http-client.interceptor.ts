@@ -1,8 +1,8 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpHandler, HttpInterceptor, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { concatMap, finalize, first, map } from 'rxjs/operators';
 import { EncryptionService } from '../_services/encryption.service';
 
@@ -23,7 +23,22 @@ export class HttpClientInterceptor implements HttpInterceptor {
     return this.recaptchaV3Service.execute(action).pipe(
       first(Boolean),
       concatMap((token: string): Observable<any> => this.getRequestEncryption(this.addRecaptchaToken(req, token))),
-      concatMap(reqClonedAndEncrypted => next.handle(reqClonedAndEncrypted).pipe(finalize(() => this.spinnerFacade.hideSpinner())))
+      concatMap(reqClonedAndEncrypted => next.handle(reqClonedAndEncrypted).pipe(finalize(() => this.spinnerFacade.hideSpinner()))),
+      concatMap((event) => {
+        if (event instanceof HttpResponse && event.body.response) {
+          return this.encryptionService.decrypt(event.body.response)
+            .pipe(
+              map((response) => JSON.parse(response)),
+              map((response) => event.clone({
+                body: {
+                  ...event.body,
+                  response
+                }
+              }))
+            )
+        }
+        return of(event)
+      }),
     );
   }
 

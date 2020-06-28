@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { ResponseBaseInterface } from '../../../../_interfaces/base.interface';
+import { RequestResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
 
 import { AuthService } from '../../_services/auth.service';
 import {
@@ -14,7 +16,6 @@ import {
 } from '../actions/auth.actions';
 import { RequestLoginActionInterface } from '../../_interfaces/auth-actions.interface';
 import { ResponseLoginInterface } from '../../_interfaces/auth.interface';
-import { ResponseUpdateAccount } from '../../../account/_interfaces/account.interface';
 import { AccountService } from '../../../account/_services/account.service';
 
 @Injectable()
@@ -52,8 +53,9 @@ export class AuthEffects {
         const { id, body } = action;
         return this.accountService.updateAccount(id, body)
           .pipe(
-            map((response: ResponseUpdateAccount) => {
-              const email = response.result && response.result.email;
+            map((response: ResponseBaseInterface<RequestResponseUpdateAccount>) => response.response),
+            map((response: RequestResponseUpdateAccount) => {
+              const email = response.email;
               if (email) {
                 this.authService.setEmailInStorage(email);
               }
