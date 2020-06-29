@@ -1,6 +1,10 @@
 module.exports = {
   // region Encryption
-  DECRYPTION_ERROR: {
+  DECRYPTION_ERROR_QUERY_PARAMS: {
+    code: 600,
+    message: 'There was an unexpected error'
+  },
+  DECRYPTION_ERROR_BODY: {
     code: 600,
     message: 'There was an unexpected error'
   },

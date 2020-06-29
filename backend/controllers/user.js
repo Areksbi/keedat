@@ -146,7 +146,7 @@ exports.userUpdate = (req, res, next) => {
         next()
       }
 
-      User.findOneAndUpdate({_id: new mongoose.mongo.ObjectID(reqId)}, { $set })
+      User.findOneAndUpdate({ _id: new mongoose.mongo.ObjectID(reqId) }, { $set })
         .then((user) => {
           if (user) {
             User.findById(user._id)
@@ -191,20 +191,25 @@ exports.userDelete = (req, res, next) => {
   User.findByIdAndDelete(req.params.id)
     .then((response) => {
       if (response) {
-        return res.status(200).json({
-          code: responseCodes.ACCOUNT_DELETE_SUCCESS.code,
-          message: responseCodes.ACCOUNT_DELETE_SUCCESS.message
-        });
+        res.locals.response = {
+          status: 200,
+          codeObject: responseCodes.ACCOUNT_DELETE_SUCCESS,
+        }
+        next()
       }
-      return res.status(500).json({
-        code: responseCodes.ACCOUNT_DELETE_NOTHING.code,
-        message: responseCodes.ACCOUNT_DELETE_NOTHING.message
-      })
+      res.locals.response = {
+        status: 500,
+        codeObject: responseCodes.ACCOUNT_DELETE_NOTHING,
+      }
+      next()
     })
-    .catch(() =>
-      res.status(500).json({
-        code: responseCodes.ACCOUNT_DELETE_ERROR.code,
-        message: responseCodes.ACCOUNT_DELETE_ERROR.message
-      }));
+    .catch((err) => {
+      console.error(err)
+      res.locals.response = {
+        status: 500,
+        codeObject: responseCodes.ACCOUNT_DELETE_ERROR,
+      }
+      next()
+    });
 };
 

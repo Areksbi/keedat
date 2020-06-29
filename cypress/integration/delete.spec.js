@@ -23,11 +23,10 @@ describe('Delete', () => {
     cy.get('[data-e2e="header-account"]').click()
     cy.get('[data-e2e="delete-user"]').click()
 
-    cy.wait('@delete')
     cy.get('.mat-tab-label').contains('Login')
 
     cy.login(email, password)
-    cy.get('[data-e2e="error-text"]').contains('Auth failed')
+    cy.get('[data-e2e="error-text"]').contains('Invalid authentication credentials!')
     cy.get('[data-e2e="error-button"]').click()
     cy.get('[data-e2e="error-text"]').should('not.exist')
   })
