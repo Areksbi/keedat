@@ -13,7 +13,7 @@ router.post('/registration', errorsLogger, decryption, checkRecaptcha, UserContr
 
 router.post('/login', errorsLogger, decryption, checkRecaptcha, UserController.userLogin, encryption);
 
-router.put('/update/:id', errorsLogger, decryption, checkRecaptcha, UserController.userUpdate/*, encryption*/);
+router.put('/update/:id', /*errorsLogger,*/ decryption, checkRecaptcha, UserController.userUpdate, encryption);
 
 router.delete('/delete/:id', errorsLogger, decryption, checkRecaptcha, UserController.userDelete/*, encryption*/);
 

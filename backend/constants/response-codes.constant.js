@@ -26,10 +26,6 @@ module.exports = {
     code: 801,
     message: 'Invalid authentication credentials!'
   },
-  LOGIN_NO_USER_ERROR: {
-    code: 801,
-    message: 'Invalid authentication credentials!'
-  },
   LOGIN_INVALID_PASSWORD_ERROR: {
     code: 802,
     message: 'Invalid authentication credentials!'

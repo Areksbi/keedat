@@ -31,15 +31,17 @@ describe('Update', () => {
       cy.get('[data-e2e="update-account"]').click()
 
       cy.wait('@update').then(() => {
-        expect(localStorage.getItem('email')).to.eq(`2-${updatedEmail}`)
+        cy.wait(1000).then(() => {
+          expect(localStorage.getItem('email')).to.eq(`2-${updatedEmail}`)
 
-        cy.get('[data-e2e="header-logout"]').contains('Logout').click()
-        cy.get('.mat-tab-label').contains('Login')
+          cy.get('[data-e2e="header-logout"]').contains('Logout').click()
+          cy.get('.mat-tab-label').contains('Login')
 
-        cy.login(`2-${updatedEmail}`, password)
+          cy.login(`2-${updatedEmail}`, password)
 
-        expect(localStorage.getItem('email')).to.eq(`2-${updatedEmail}`)
-        cy.get('[data-e2e="header-logout"]').contains('Logout').click()
+          expect(localStorage.getItem('email')).to.eq(`2-${updatedEmail}`)
+          cy.get('[data-e2e="header-logout"]').contains('Logout').click()
+        })
       })
     })
   })
@@ -85,15 +87,17 @@ describe('Update', () => {
     cy.get('[data-e2e="update-account"]').click()
 
     cy.wait('@update').then(() => {
-      expect(localStorage.getItem('email')).to.eq(`2-${email}`)
+      cy.wait(1000).then(() => {
+        expect(localStorage.getItem('email')).to.eq(`2-${email}`)
 
-      cy.get('[data-e2e="header-logout"]').contains('Logout').click()
-      cy.get('.mat-tab-label').contains('Login')
+        cy.get('[data-e2e="header-logout"]').contains('Logout').click()
+        cy.get('.mat-tab-label').contains('Login')
 
-      cy.login(`2-${email}`, `2-${password}`)
+        cy.login(`2-${email}`, `2-${password}`)
 
-      cy.get('[data-e2e="header-logout"]').contains('Logout')
-      expect(localStorage.getItem('email')).to.eq(`2-${email}`)
+        cy.get('[data-e2e="header-logout"]').contains('Logout')
+        expect(localStorage.getItem('email')).to.eq(`2-${email}`)
+      })
     })
   })
 
@@ -110,15 +114,17 @@ describe('Update', () => {
     cy.get('[data-e2e="update-account"]').click()
 
     cy.wait('@update').then(() => {
-      expect(localStorage.getItem('email')).to.eq(email)
+      cy.wait(1000).then(() => {
+        expect(localStorage.getItem('email')).to.eq(email)
 
-      cy.get('[data-e2e="header-logout"]').contains('Logout').click()
-      cy.get('.mat-tab-label').contains('Login')
+        cy.get('[data-e2e="header-logout"]').contains('Logout').click()
+        cy.get('.mat-tab-label').contains('Login')
 
-      cy.login(email, `2-${password}`)
+        cy.login(email, `2-${password}`)
 
-      cy.get('[data-e2e="header-logout"]').contains('Logout')
-      expect(localStorage.getItem('email')).to.eq(email)
+        cy.get('[data-e2e="header-logout"]').contains('Logout')
+        expect(localStorage.getItem('email')).to.eq(email)
+      })
     })
   })
 

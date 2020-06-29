@@ -52,7 +52,7 @@ module.exports = class EncryptionHelpers {
   }
 
   pemToBase64String(value) {
-    var lines = value.split("\n");
+    var lines = value.split(/\n|\\n/);
     var base64String = "";
 
     for (var i = 0; i < lines.length; i++) {
