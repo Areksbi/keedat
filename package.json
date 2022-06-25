@@ -36,7 +36,7 @@
     "mongoose": "^5.8.3",
     "mongoose-unique-validator": "^2.0.3",
     "ng-recaptcha": "^5.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "rxjs": "^6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
